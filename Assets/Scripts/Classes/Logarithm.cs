@@ -15,7 +15,7 @@
 
         public Logarithm()
         {
-
+            generateRandomComponent();
         }
         public override void AddToComponent(float cofactor)
         {
@@ -29,7 +29,7 @@
 
         public override void generateRandomComponent()
         {
-            throw new System.NotImplementedException();
+
         }
 
         public override void IntegrateComponent()

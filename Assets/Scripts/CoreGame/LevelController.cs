@@ -6,17 +6,50 @@ public class LevelController : MonoBehaviour
 {
 
     bool levelTimerFinished = false;
+    Music music;
+    BGFx bGFx;
+    BGConstantFX bGConstantFX;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        music = FindObjectOfType<Music>();
+        bGConstantFX = FindObjectOfType<BGConstantFX>();
+        bGFx = FindObjectOfType<BGFx>();
+        bGConstantFX.playTheConstantBGFx();
+        bGFx.playTheBGFx();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        playTheMusic();
+    }
+
+    void playTheMusic()
+    {
+        /*
+        if (Time.timeSinceLevelLoad < 10)
+        {
+            music.playKleineNachtMusic();
+        }
+        if (10 < Time.timeSinceLevelLoad && Time.timeSinceLevelLoad < 30)
+        {
+            music.playSpringMusic();
+        }
+        if (30 < Time.timeSinceLevelLoad && Time.timeSinceLevelLoad < 50)
+        {
+            music.playSummerMusic();
+        }
+        if (50 < Time.timeSinceLevelLoad && Time.timeSinceLevelLoad < 70)
+        {
+            music.playFallMusic();
+        }
+        if (70 < Time.timeSinceLevelLoad && Time.timeSinceLevelLoad < 90)
+        {
+            music.playWinterMusic();
+        }
+        */
     }
 
     public void StopLevel()
@@ -28,11 +61,11 @@ public class LevelController : MonoBehaviour
 
     private void StopSpawners()
     {
-        //AttackerSpawner[] mySpawners = FindObjectsOfType<AttackerSpawner>();
-        //foreach (AttackerSpawner spawner in mySpawners)
-        //{
-        //    spawner.StopSpawning();
-        //}
+        FallingFunctionSpawner[] mySpawners = FindObjectsOfType<FallingFunctionSpawner>();
+        foreach (FallingFunctionSpawner spawner in mySpawners)
+        {
+            spawner.StopSpawning();
+        }
 
     }
 

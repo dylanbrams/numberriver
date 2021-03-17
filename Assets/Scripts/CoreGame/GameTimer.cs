@@ -14,6 +14,8 @@ public class GameTimer : MonoBehaviour
     PointsManager pointsManager;
     TextMeshProUGUI tValue;
 
+    public float NormalizedTime { get => normalizedTime; set => normalizedTime = value; }
+
     private void Awake()
     {
         pointsManager = transform.parent.GetComponentInChildren<PointsManager>();
@@ -25,7 +27,7 @@ public class GameTimer : MonoBehaviour
     {
         if (!levelFinished)
         {
-            normalizedTime = Time.timeSinceLevelLoad / levelTime;
+            NormalizedTime = Time.timeSinceLevelLoad / levelTime;
             SetSliderValue();
             CalculateScore();
             ManageLevelFinish();
@@ -44,7 +46,7 @@ public class GameTimer : MonoBehaviour
 
     private void ManageLevelFinish()
     {
-        if (normalizedTime > 1)
+        if (NormalizedTime > 1)
         {
             levelFinished = true;
             FindObjectOfType<LevelController>().StopLevel();
@@ -53,8 +55,8 @@ public class GameTimer : MonoBehaviour
     }
     void SetSliderValue()
     {
-        GetComponent<Slider>().value = normalizedTime;
-        tValue.text = "t = " + normalizedTime.ToString("n2");
+        GetComponent<Slider>().value = NormalizedTime;
+        tValue.text = "t = " + NormalizedTime.ToString("n2");
     }
 
 }

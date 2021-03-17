@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MatWaterUnlitGraphTwo
+  m_Shader: {fileID: -6465566751694194690, guid: 9b54cf91a20de1a45b9663df682fe5de,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_1E002525: 30
+    - Vector1_51ABF927: 0
+    - Vector1_68BC3992: 0
+    - Vector1_6BB6BB7D: 0.25
+    - Vector1_7715502A: 35
+    - Vector1_C92A7E44: 0
+    - Vector1_CB1394CD: 0.1
+    m_Colors:
+    - Color_B6D2D8A2: {r: 0.025587406, g: 0.12041131, b: 0.23584908, a: 0}
+    - Color_DE647302: {r: 0.20392157, g: 0.31764707, b: 0.30980393, a: 0}
+    - Color_F7B3683E: {r: 0.3254902, g: 0.43529412, b: 0.48235294, a: 0}

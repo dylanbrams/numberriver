@@ -36,9 +36,9 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     [Tooltip("Functional type of this cell")]
     public CellType cellType = CellType.DropOnly;                               // Special type of this cell
     [Tooltip("Sprite color for empty cell")]
-    public Color empty = new Color();                                       // Sprite color for empty cell
+    [SerializeField] public Color empty = new Color();                                       // Sprite color for empty cell
     [Tooltip("Sprite color for filled cell")]
-    public Color full = new Color();                                        // Sprite color for filled cell
+    [SerializeField] public Color full = new Color();                                        // Sprite color for filled cell
     [Tooltip("This cell has unlimited amount of items")]
     public bool unlimitedSource = false;                                    // Item from this cell will be cloned on drag start
 
@@ -136,7 +136,7 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
         {
             DropCount++;
             Debug.Log("Time to modify equations. " + DropCount.ToString());
-            if (myDadItem = null)
+            if (myDadItem == null)
             {
                 DragAndDropCell cell = tmpObj.GetComponentInParent<DragAndDropCell>();
                 tmpObj.transform.SetParent(transform, false);

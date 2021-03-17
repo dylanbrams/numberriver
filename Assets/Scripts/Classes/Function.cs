@@ -7,13 +7,11 @@ namespace Assets.Scripts.Classes
 
     public class Function
     {
-        int value = 1;
         int fontSize = 8;
         string latexRepresentation = "123";
         public float randomIn;
         public int charCount = 0;
 
-        public int Value { get => value; set => this.value = value; }
         public string LatexRepresentation { get => latexRepresentation; set => latexRepresentation = value; }
         public int FontSize { get => fontSize; set => fontSize = value; }
 
@@ -33,7 +31,9 @@ namespace Assets.Scripts.Classes
 
         public int CalculateOnce(double t, int p)
         {
-            return (int)functionComponents[0].getCurrentValue(t, p);
+            int myValue = (int)functionComponents[0].getCurrentValue(t, p);
+            Debug.Log(myValue.ToString());
+            return myValue;
         }
 
         public void SetNewFunction(string newLatexInput)
@@ -42,9 +42,11 @@ namespace Assets.Scripts.Classes
             int number;
             if (int.TryParse(newLatexInput, out number))
             {
-                value = number;
+                // Figure out how to directly set a function with a LaTeX input here.
             }
+            SetNewFunction();
             CountMyCharacters();
+
         }
 
         public void SetNewFunction()

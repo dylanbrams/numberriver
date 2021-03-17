@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Classes\AudioFadeOut.cs" />
     <Compile Include="Assets\Scripts\Classes\Function.cs" />
     <Compile Include="Assets\Scripts\Classes\FunctionComponent.cs" />
     <Compile Include="Assets\Scripts\Classes\FunctionComponentType.cs" />
@@ -78,17 +79,23 @@
     <Compile Include="Assets\Scripts\CoreGame\GameTimer.cs" />
     <Compile Include="Assets\Scripts\CoreGame\LevelController.cs" />
     <Compile Include="Assets\Scripts\CoreGame\PointsManager.cs" />
+    <Compile Include="Assets\Scripts\CoreGame\Sound\BGConstantFX.cs" />
+    <Compile Include="Assets\Scripts\CoreGame\Sound\BGFx.cs" />
+    <Compile Include="Assets\Scripts\CoreGame\Sound\Music.cs" />
     <Compile Include="Assets\Scripts\GameFunctionInteraction\FallingFunction.cs" />
     <Compile Include="Assets\Scripts\GameFunctionInteraction\FallingFunctionSpawner.cs" />
     <Compile Include="Assets\Scripts\GameFunctionInteraction\FunctionDestroyer.cs" />
+    <Compile Include="Assets\Scripts\GameFunctionInteraction\FunctionSettings.cs" />
     <Compile Include="Assets\Scripts\GameFunctionInteraction\NumberSlot.cs" />
     <Compile Include="Assets\SimpleDragAndDrop\Scripts\DragAndDropCell.cs" />
     <Compile Include="Assets\SimpleDragAndDrop\Scripts\DragAndDropItem.cs" />
     <Compile Include="Assets\SimpleDragAndDrop\Scripts\DummyControlUnit.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Graphics\TriForge Assets\Top Down - Fantasy Forest - URP\Shaders\Water.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\Graphics\TriForge Assets\Top Down - Fantasy Forest - URP\Shaders\TreeLod.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
@@ -99,8 +106,11 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Graphics\TriForge Assets\Top Down - Fantasy Forest - URP\Shaders\StandardCullOff.shader" />
+    <None Include="Assets\Graphics\TriForge Assets\Top Down - Fantasy Forest - URP\Shaders\TreeTopDown.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Graphics\TriForge Assets\Top Down - Fantasy Forest - URP\Shaders\Flame.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
@@ -640,6 +650,9 @@
     <Reference Include="System.Xml.Serialization">
       <HintPath>C:/Source/Unity/2019.4.17f1/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -649,8 +662,17 @@
     <Reference Include="Unity.2D.PixelPerfect.Editor">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.2D.PixelPerfect.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.SpriteShape.Editor">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.2D.SpriteShape.Editor.dll</HintPath>
@@ -660,6 +682,12 @@
     </Reference>
     <Reference Include="Unity.2D.Path.Editor">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.2D.Path.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
@@ -678,6 +706,9 @@
     </Reference>
     <Reference Include="Unity.Rider.Editor">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Mathematics">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
@@ -706,8 +737,14 @@
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Mathematics.Editor">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>D:/Unity2d/NumberRiver/NumberRiver/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

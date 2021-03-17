@@ -11,6 +11,7 @@ public class PointsManager : MonoBehaviour
     int currentScore = 0;
     List<DragAndDropFallingFunctionCell> CellList;
     TextMeshProUGUI scoreTMP; // Note: The scoreboard for this points manager needs to be in its children.
+    GameTimer gameTimer;
 
     public int CurrentScore { get => currentScore; set => currentScore = value; }
 
@@ -18,23 +19,28 @@ public class PointsManager : MonoBehaviour
     void Awake()
     {
         scoreTMP = GetComponentInChildren<TextMeshProUGUI>();
+        gameTimer = FindObjectOfType<GameTimer>();
     }
 
     public void IterateOneScore(float timeFactor)
     {
         FallingFunction[] equationHolders = EquationHolderSet.GetComponentsInChildren<FallingFunction>();
+        int addToScore = 0;
         foreach (FallingFunction currentContainer in equationHolders)
         {
             Function currentEquation = currentContainer.getFunction();
             if (currentEquation != null)
             {
-                CurrentScore += currentEquation.CalculateOnce(Time.realtimeSinceStartup, CurrentScore);
+                int currentScore = currentEquation.CalculateOnce(gameTimer.NormalizedTime, CurrentScore);
+                currentContainer.DisplayPoints(currentScore);
+                addToScore += currentScore;
             }
         }
-        UpdatePlayerScore();
+        currentScore += Mathf.Max(0, addToScore);
+        UpdatePlayerScoreDisplay();
     }
 
-    void UpdatePlayerScore()
+    void UpdatePlayerScoreDisplay()
     {
         scoreTMP.text = CurrentScore.ToString("D8");
     }

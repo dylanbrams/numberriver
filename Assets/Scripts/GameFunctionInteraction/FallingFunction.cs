@@ -18,6 +18,7 @@ public class FallingFunction : MonoBehaviour
     [SerializeField] float randomXForceMax = 1;
     [SerializeField] float randomYForceMax = 1;
     [SerializeField] bool rotateNumbers = true;
+    [SerializeField] TMPro.TextMeshProUGUI PointsDisplayPrefab;
 
     void Start()
     {
@@ -119,5 +120,9 @@ public class FallingFunction : MonoBehaviour
         function.ProcessCombine(functionIn.getFunction());
     }
 
+    public void DisplayPoints(int pointsValue)
+    {
+
+    }
 }
 

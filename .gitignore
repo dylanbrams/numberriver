@@ -26,6 +26,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+Temp/
+[Ll]ibrary/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -338,3 +340,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/Assets/Graphics/PBR Material Bundle Vol1
+/Assets/Graphics/TriForge Assets/Top Down - Fantasy Forest - URP
+

@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\CoreGame\GameState.cs" />
     <Compile Include="Assets\Scripts\CoreGame\GameTimer.cs" />
     <Compile Include="Assets\Scripts\CoreGame\LevelController.cs" />
+    <Compile Include="Assets\Scripts\CoreGame\PauseMenuHandler.cs" />
     <Compile Include="Assets\Scripts\CoreGame\PointsManager.cs" />
     <Compile Include="Assets\Scripts\CoreGame\Sound\BGConstantFX.cs" />
     <Compile Include="Assets\Scripts\CoreGame\Sound\BGFx.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Assets\SimpleDragAndDrop\Scripts\DragAndDropCell.cs" />
     <Compile Include="Assets\SimpleDragAndDrop\Scripts\DragAndDropItem.cs" />
     <Compile Include="Assets\SimpleDragAndDrop\Scripts\DummyControlUnit.cs" />
+    <Compile Include="Assets\Text\Acknowledgements.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\Graphics\TriForge Assets\Top Down - Fantasy Forest - URP\Shaders\Water.shader" />

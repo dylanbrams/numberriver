@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5930a7018bc60a4f9386ebce6990ee9, type: 3}
+  m_Name: AllAcknowledgements
+  m_EditorClassIdentifier: 
+  Acknowledgement_string: "Game designed, built, and marketed by Dylan Brams\r\n\r\nI
+    would like to thank / acknowledge:\r\n\r\nMy wife, for supporting me in making
+    this game and follow a less profitable dream.\r\n\r\nWhomever the guy in Indonesia
+    named WillNode is. He built the TexDraw package for Unity, without which this
+    game would have taken much longer to produce.\r\n\r\nMatthew Welch, matt@squaregear.net;
+    he created the font for the menu.\r\nWeb Address: http://www.squaregear.net/fonts/\r\n\r\nThe
+    MusOpen.org project, ( https://musopen.org/team/ ) for doing something amazing.\r\nSpecific
+    musicians / groups who have contributed to MusOpen or made their performances
+    public domain, which may include:\r\n\tIvan Ilic\r\n\tPapalin\r\n\tThe Czech
+    National Symphony Orchestra\r\n\tThe US Army Strings Band\r\n\tThe US Air Force
+    Band\r\n\tThe European Archive\r\n\tThe Advent Chamber Orchestra\r\n\r\nThe SymPy
+    team for writing clean code. I did not use their code directly, but my equations
+    library borrowed from it.\r\n\r\nShould this game sell a significant number of
+    copies, I will distribute a portion of the profits to these deserving entities.\r\n"

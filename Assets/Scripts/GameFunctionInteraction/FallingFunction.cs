@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using Assets.Scripts.Classes;
 using TexDrawLib;
+using TMPro;
+
 public class FallingFunction : MonoBehaviour
 {
     public Function function;
@@ -15,10 +17,12 @@ public class FallingFunction : MonoBehaviour
     Rigidbody2D myRigidBody2D;
     DragAndDropFallingFunction myDragAndDropTMP;
     public float randomIn;
+
     [SerializeField] float randomXForceMax = 1;
     [SerializeField] float randomYForceMax = 1;
-    [SerializeField] bool rotateNumbers = true;
-    [SerializeField] TMPro.TextMeshProUGUI PointsDisplayPrefab;
+    [SerializeField] Vector3 ScoreDisplayOffset = new Vector3(0, 0, 0);
+
+    private TextMeshProUGUI linkedPointsDisplay;
 
     void Start()
     {
@@ -120,9 +124,15 @@ public class FallingFunction : MonoBehaviour
         function.ProcessCombine(functionIn.getFunction());
     }
 
+    public void setPointsDisplay(TextMeshProUGUI tmpUGUIIn)
+    {
+        linkedPointsDisplay = tmpUGUIIn;
+    }
+
     public void DisplayPoints(int pointsValue)
     {
-
+        linkedPointsDisplay.text = pointsValue.ToString();
     }
+
 }
 

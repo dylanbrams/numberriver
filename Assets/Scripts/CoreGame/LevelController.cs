@@ -5,6 +5,12 @@ using UnityEngine;
 public class LevelController : MonoBehaviour
 {
 
+    [SerializeField] bool musicOn = false;
+    [SerializeField] bool bgFXOn = false;
+    [SerializeField] bool bgConstantFXOn = false;
+    [SerializeField] GameObject GameplayUI;
+    [SerializeField] GameObject PauseMenu;
+
     bool levelTimerFinished = false;
     Music music;
     BGFx bGFx;
@@ -13,43 +19,35 @@ public class LevelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        music = FindObjectOfType<Music>();
-        bGConstantFX = FindObjectOfType<BGConstantFX>();
-        bGFx = FindObjectOfType<BGFx>();
-        bGConstantFX.playTheConstantBGFx();
-        bGFx.playTheBGFx();
+        setupAudioObjects();
+        startAudio();
     }
 
     // Update is called once per frame
     void Update()
     {
-        playTheMusic();
+        // playTheMusic();
     }
 
+    void setupAudioObjects()
+    {
+        music = FindObjectOfType<Music>();
+        bGConstantFX = FindObjectOfType<BGConstantFX>();
+        bGFx = FindObjectOfType<BGFx>();
+    }
+
+    void startAudio()
+    {
+        if (bgConstantFXOn)
+            bGConstantFX.playConstantBGFx();
+        if (bgFXOn)
+            bGFx.playBGFX();
+        if (musicOn)
+            playTheMusic();
+    }
     void playTheMusic()
     {
-        /*
-        if (Time.timeSinceLevelLoad < 10)
-        {
-            music.playKleineNachtMusic();
-        }
-        if (10 < Time.timeSinceLevelLoad && Time.timeSinceLevelLoad < 30)
-        {
-            music.playSpringMusic();
-        }
-        if (30 < Time.timeSinceLevelLoad && Time.timeSinceLevelLoad < 50)
-        {
-            music.playSummerMusic();
-        }
-        if (50 < Time.timeSinceLevelLoad && Time.timeSinceLevelLoad < 70)
-        {
-            music.playFallMusic();
-        }
-        if (70 < Time.timeSinceLevelLoad && Time.timeSinceLevelLoad < 90)
-        {
-            music.playWinterMusic();
-        }
-        */
+        music.playSpringMusic();
     }
 
     public void StopLevel()
@@ -67,6 +65,22 @@ public class LevelController : MonoBehaviour
             spawner.StopSpawning();
         }
 
+    }
+
+    public void PauseGame()
+    {
+        Debug.Log("Pause");
+        Time.timeScale = 0;
+        GameplayUI.SetActive(false);
+        PauseMenu.SetActive(true);
+    }
+
+    public void UnPauseGame()
+    {
+        Debug.Log("Unpause");
+        Time.timeScale = 1;
+        GameplayUI.SetActive(true);
+        PauseMenu.SetActive(false);
     }
 
     private void StopGenerators()

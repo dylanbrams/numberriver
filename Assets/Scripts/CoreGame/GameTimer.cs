@@ -7,7 +7,7 @@ using TMPro;
 public class GameTimer : MonoBehaviour
 {
     [Tooltip("The number of seconds the level will last")]
-    [SerializeField] float levelTime = 40;
+    [SerializeField] float levelTime = 120;
     bool levelFinished = false;
     float normalizedTime = 0f;
     int lastScoreCalc = 0;

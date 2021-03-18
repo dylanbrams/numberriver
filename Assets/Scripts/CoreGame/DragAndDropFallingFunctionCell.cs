@@ -41,8 +41,10 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     [SerializeField] public Color full = new Color();                                        // Sprite color for filled cell
     [Tooltip("This cell has unlimited amount of items")]
     public bool unlimitedSource = false;                                    // Item from this cell will be cloned on drag start
+    [SerializeField] public TMPro.TextMeshProUGUI LinkedPointsDisplay;
 
     private DragAndDropFallingFunction myDadItem;										// Item of this DaD cell
+    private FallingFunction myFunction;
     private int DropCount = 0;
 
     void OnEnable()
@@ -241,6 +243,12 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     public void UpdateMyItem()
     {
         myDadItem = GetComponentInChildren<DragAndDropFallingFunction>();
+        myFunction = GetComponentInChildren<FallingFunction>();
+        if (myFunction)
+        {
+            LinkedPointsDisplay.gameObject.SetActive(true);
+            myFunction.setPointsDisplay(LinkedPointsDisplay);
+        }
     }
 
     /// <summary>

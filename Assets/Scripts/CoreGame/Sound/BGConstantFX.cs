@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class BGConstantFX : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] float BGConstantFxVolume = 0.125f;
+    [SerializeField] float BGConstantFadeIn = 2f;
+    [SerializeField] AudioClip backgroundConstantSound;
+
+    private AudioSource myAudioSource;
+    private void Awake()
     {
-        
+        myAudioSource = gameObject.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void playConstantBGFx()
     {
-        
+        myAudioSource.volume = 0;
+        myAudioSource.clip = backgroundConstantSound;
+        myAudioSource.Play();
+        StartCoroutine(AudioFadeIn.FadeIn(myAudioSource, BGConstantFadeIn, BGConstantFxVolume));
     }
+
 }

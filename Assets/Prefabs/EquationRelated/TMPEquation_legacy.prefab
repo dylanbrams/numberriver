@@ -148,7 +148,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea107b9a4b16fed42880243aa5a9cdf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateNumbers: 1
+  randomIn: 0
+  randomXForceMax: 1
+  randomYForceMax: 1
+  pointsDisplayPrefab: {fileID: 1044937668422689215, guid: ed60152fd950fc244927f2ae16b93996,
+    type: 3}
+  pointsDisplayDestroyTime: 0.5
+  ScoreDisplayOffset: {x: 20, y: 20, z: -10}
 --- !u!61 &4033788934396413609
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -193,3 +199,4 @@ MonoBehaviour:
     type: 3}
   finishDragParticlesDestroyTime: 5
   canvas: {fileID: 0}
+  movementHalted: 0

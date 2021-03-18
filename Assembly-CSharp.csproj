@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Classes\AudioFadeIn.cs" />
     <Compile Include="Assets\Scripts\Classes\AudioFadeOut.cs" />
     <Compile Include="Assets\Scripts\Classes\Function.cs" />
     <Compile Include="Assets\Scripts\Classes\FunctionComponent.cs" />

@@ -81,8 +81,9 @@
     <Compile Include="Assets\Scripts\CoreGame\LevelController.cs" />
     <Compile Include="Assets\Scripts\CoreGame\PauseMenuHandler.cs" />
     <Compile Include="Assets\Scripts\CoreGame\PointsManager.cs" />
-    <Compile Include="Assets\Scripts\CoreGame\Sound\BGConstantFX.cs" />
+    <Compile Include="Assets\Scripts\CoreGame\Sound\BGConstantFx.cs" />
     <Compile Include="Assets\Scripts\CoreGame\Sound\BGFx.cs" />
+    <Compile Include="Assets\Scripts\CoreGame\Sound\FGSFx.cs" />
     <Compile Include="Assets\Scripts\CoreGame\Sound\Music.cs" />
     <Compile Include="Assets\Scripts\GameFunctionInteraction\FallingFunction.cs" />
     <Compile Include="Assets\Scripts\GameFunctionInteraction\FallingFunctionSpawner.cs" />

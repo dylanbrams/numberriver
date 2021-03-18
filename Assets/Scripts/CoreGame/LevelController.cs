@@ -14,7 +14,7 @@ public class LevelController : MonoBehaviour
     bool levelTimerFinished = false;
     Music music;
     BGFx bGFx;
-    BGConstantFX bGConstantFX;
+    BGConstantFx bGConstantFX;
     
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,7 @@ public class LevelController : MonoBehaviour
     void setupAudioObjects()
     {
         music = FindObjectOfType<Music>();
-        bGConstantFX = FindObjectOfType<BGConstantFX>();
+        bGConstantFX = FindObjectOfType<BGConstantFx>();
         bGFx = FindObjectOfType<BGFx>();
     }
 

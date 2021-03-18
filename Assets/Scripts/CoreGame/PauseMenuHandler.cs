@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseMenuHandler : ScriptableObject
+public class PauseMenuHandler : MonoBehaviour
 {
+    [SerializeField] BGFx bGFx;
+    [SerializeField] BGConstantFx bGConstantFX;
+    [SerializeField] LevelController levelController;
+    [SerializeField] Music music;
+
     // Start is called before the first frame update
     void Start()
     {

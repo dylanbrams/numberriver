@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BGConstantFX : MonoBehaviour
+public class BGConstantFx : MonoBehaviour
 {
-    [SerializeField] float BGConstantFxVolume = 0.125f;
+    [SerializeField] public float BGConstantFxVolume = 0.125f;
     [SerializeField] float BGConstantFadeIn = 2f;
     [SerializeField] AudioClip backgroundConstantSound;
 

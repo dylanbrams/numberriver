@@ -22,7 +22,7 @@ namespace Assets.Scripts.Classes
         {
             periodCount = 1;
             cofactor = 20;
-            setLatexRepresentation();
+            SetLatexRepresentation();
         }
         public override void AddToComponent(float cofactorInput)
         {
@@ -34,12 +34,12 @@ namespace Assets.Scripts.Classes
             throw new System.NotImplementedException();
         }
 
-        public override void generateRandomComponent()
+        public override void GenerateRandomComponent()
         {
             throw new System.NotImplementedException();
         }
 
-        public override double getCurrentValue(double t, int p)
+        public override double GETCurrentValue(double t, int p)
         {
             return cofactor * Math.Sin( 2 * Math.PI * periodCount * t);
         }
@@ -49,7 +49,7 @@ namespace Assets.Scripts.Classes
             throw new System.NotImplementedException();
         }
 
-        public override string getLatexRepresentation()
+        public override string GETLatexRepresentation()
         {
             return latexRepresentation;
         }
@@ -64,7 +64,7 @@ namespace Assets.Scripts.Classes
             throw new System.NotImplementedException();
         }
 
-        public override void setLatexRepresentation()
+        public override void SetLatexRepresentation()
         {
             latexRepresentation = "{20}{sin}({t})";
         }

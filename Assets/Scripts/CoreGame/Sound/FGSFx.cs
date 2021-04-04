@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class FGSFx : MonoBehaviour
 {
+    public bool active = true;
+    [SerializeField] public float volume = 0.65f;
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetVolume(float volumeIn)
     {
-        
+        volume = volumeIn;
     }
+
+    public float GetVolume()
+    {
+        return volume;
+    }
+
 }

@@ -12,7 +12,9 @@ public class Music : MonoBehaviour
     [SerializeField] AudioClip summerMusic;
     [SerializeField] AudioClip fallMusic;
     [SerializeField] AudioClip winterMusic;
-    private bool fading = false;
+    private bool fadingOut = false;
+    private bool fadingIn = false;
+    private float fadeoutTime = 2f;
 
     private AudioSource myAudioSource;
     private void Awake()
@@ -49,27 +51,62 @@ public class Music : MonoBehaviour
 
     private void playNewSong(AudioClip newSong)
     {
-        if (myAudioSource.clip != newSong && fading != true)
+        if ((myAudioSource.clip != newSong && fadingOut != true) || (!myAudioSource.isPlaying && fadingIn == false))
         {
+            fadingIn = true;
             StartCoroutine(fadeCurrentSongAndStartNew(newSong));
         }
+        fadingIn = false;
     }
 
     private IEnumerator fadeCurrentSongAndStartNew(AudioClip newSong)
     {
         Debug.Log("Fading song for 2 seconds at time" + Time.timeSinceLevelLoad.ToString());
-        fading = true;
+        fadingOut = true;
         if (volume != 0)
         {
-            StartCoroutine(AudioFadeOut.FadeOut(myAudioSource, 2f));
+            StartCoroutine(AudioFadeOut.FadeOut(myAudioSource, fadeoutTime));
         }
-        yield return new WaitForSeconds(2);
-        fading = false;
+        yield return new WaitForSeconds(fadeoutTime);
+        fadingOut = false;
         myAudioSource.volume = volume;
         Debug.Log("Starting New Song, " + newSong.name.ToString() + " At time" + Time.timeSinceLevelLoad.ToString());
         myAudioSource.clip = newSong;
         myAudioSource.Play();
 
+    }
+
+    public void SetVolume(float volumeIn)
+    {
+        volume = volumeIn;
+        if (myAudioSource)
+            myAudioSource.volume = volumeIn;
+    }
+
+    public float GetVolume()
+    {
+        return volume;
+    }
+    public void stopTheMusic()
+    {
+        StartCoroutine(fadeCurrentSong());
+    }
+    private IEnumerator fadeCurrentSong()
+    {
+        fadingOut = true;
+        if (volume != 0)
+        {
+            StartCoroutine(AudioFadeOut.FadeOut(myAudioSource, fadeoutTime));
+        }
+        if (Time.deltaTime > 0)
+            yield return new WaitForSeconds(fadeoutTime);
+        else
+            yield return new WaitForSecondsRealtime(fadeoutTime);
+        fadingOut = false;
+        if (volume == 0)
+        {
+            myAudioSource.Stop();
+        }
     }
 
     private void SetUpSingleton()

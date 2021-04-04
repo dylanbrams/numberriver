@@ -7,10 +7,15 @@ public static class AudioFadeOut
     public static IEnumerator FadeOut(AudioSource audioSource, float FadeTime)
     {
         float startVolume = audioSource.volume;
+        float timeChange = 0.2f;
+        if (Time.deltaTime > 0)
+        {
+            timeChange = Time.deltaTime;
+        }
 
         while (audioSource.volume > 0)
         {
-            audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
+            audioSource.volume -= startVolume * timeChange / FadeTime;
             yield return null;
         }
 

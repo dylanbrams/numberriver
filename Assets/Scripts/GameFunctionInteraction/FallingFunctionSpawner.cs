@@ -25,15 +25,27 @@ public class FallingFunctionSpawner : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    IEnumerator Start()
+    void Start()
     {
         Random.InitState(randomSeed);
-        while (spawn == true) 
+        StartSpawning();
+    }
+
+    public void StartSpawning()
+    {
+        spawn = true;
+        StartCoroutine(LoopSpawning());
+    }
+
+    private IEnumerator LoopSpawning()
+    {
+        while (spawn == true)
         {
             yield return new WaitForSeconds(Random.Range(minSpawnRate, maxSpawnRate));
             SpawnFallingFunction();
             //spawn = false;
         }
+
     }
 
     public void StopSpawning()

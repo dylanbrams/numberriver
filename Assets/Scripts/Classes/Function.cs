@@ -31,7 +31,7 @@ namespace Assets.Scripts.Classes
 
         public int CalculateOnce(double t, int p)
         {
-            int myValue = (int)functionComponents[0].getCurrentValue(t, p);
+            int myValue = (int)functionComponents[0].GETCurrentValue(t, p);
             Debug.Log(myValue.ToString());
             return myValue;
         }
@@ -78,7 +78,7 @@ namespace Assets.Scripts.Classes
 
         private void GenerateFunctionLatex()
         {
-            latexRepresentation = functionComponents[0].getLatexRepresentation();
+            latexRepresentation = functionComponents[0].GETLatexRepresentation();
         }
 
         private void GenerateFunctionParts()

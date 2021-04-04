@@ -12,12 +12,12 @@
             throw new System.NotImplementedException();
         }
 
-        public override void generateRandomComponent()
+        public override void GenerateRandomComponent()
         {
             throw new System.NotImplementedException();
         }
 
-        public override double getCurrentValue(double t, int p)
+        public override double GETCurrentValue(double t, int p)
         {
             return 02;
         }
@@ -27,7 +27,7 @@
             throw new System.NotImplementedException();
         }
 
-        public override string getLatexRepresentation()
+        public override string GETLatexRepresentation()
         {
             throw new System.NotImplementedException();
         }
@@ -42,7 +42,7 @@
             throw new System.NotImplementedException();
         }
 
-        public override void setLatexRepresentation()
+        public override void SetLatexRepresentation()
         {
             throw new System.NotImplementedException();
         }

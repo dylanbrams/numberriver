@@ -7,7 +7,7 @@ public class BGFx : MonoBehaviour
     [SerializeField] AudioClip[] backgroundSound;
     [SerializeField] int minPauseBetweenSounds = 10;
     [SerializeField] int maxPauseBetweenSounds = 30;
-    [SerializeField] public float BGFxVolume;
+    [SerializeField] float BGFxVolume;
 
     private bool makeSounds = true;
 
@@ -38,6 +38,18 @@ public class BGFx : MonoBehaviour
             PlayOneSound();
             //spawn = false;
         }
+    }
+
+    public void SetVolume(float volumeIn)
+    {
+        if (myAudioSource)
+            myAudioSource.volume = volumeIn;
+        BGFxVolume = volumeIn;
+    }
+
+    public float GetVolume()
+    {
+        return BGFxVolume;
     }
 
     private void PlayOneSound()

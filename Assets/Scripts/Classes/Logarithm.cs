@@ -15,7 +15,7 @@
 
         public Logarithm()
         {
-            generateRandomComponent();
+            GenerateRandomComponent();
         }
         public override void AddToComponent(float cofactor)
         {
@@ -27,7 +27,7 @@
             throw new System.NotImplementedException();
         }
 
-        public override void generateRandomComponent()
+        public override void GenerateRandomComponent()
         {
 
         }
@@ -42,17 +42,17 @@
             throw new System.NotImplementedException();
         }
 
-        public override void setLatexRepresentation()
+        public override void SetLatexRepresentation()
         {
             throw new System.NotImplementedException();
         }
 
-        public override string getLatexRepresentation()
+        public override string GETLatexRepresentation()
         {
             return latexRepresentation;
         }
 
-        public override double getCurrentValue(double t, int p)
+        public override double GETCurrentValue(double t, int p)
         {
             return System.Math.Log(t, logBase) * cofactor;
         }

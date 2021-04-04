@@ -12,12 +12,12 @@ public abstract class FunctionComponent
 
 	public abstract void AddToComponent(float cofactorInput);
 
-	public abstract void generateRandomComponent();
+	public abstract void GenerateRandomComponent();
 
-	public abstract void setLatexRepresentation();
+	public abstract void SetLatexRepresentation();
 
-	public abstract string getLatexRepresentation();
+	public abstract string GETLatexRepresentation();
 
-	public abstract double getCurrentValue(double t, int p);
+	public abstract double GETCurrentValue(double t, int p);
 
 }

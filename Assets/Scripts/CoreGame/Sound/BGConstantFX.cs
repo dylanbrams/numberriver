@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BGConstantFx : MonoBehaviour
 {
-    [SerializeField] public float BGConstantFxVolume = 0.125f;
+    [SerializeField] float volume = 0.125f;
     [SerializeField] float BGConstantFadeIn = 2f;
     [SerializeField] AudioClip backgroundConstantSound;
 
@@ -19,7 +19,24 @@ public class BGConstantFx : MonoBehaviour
         myAudioSource.volume = 0;
         myAudioSource.clip = backgroundConstantSound;
         myAudioSource.Play();
-        StartCoroutine(AudioFadeIn.FadeIn(myAudioSource, BGConstantFadeIn, BGConstantFxVolume));
+        StartCoroutine(AudioFadeIn.FadeIn(myAudioSource, BGConstantFadeIn, volume));
+    }
+
+    public void SetVolume(float volumeIn)
+    {
+        if (myAudioSource)
+            myAudioSource.volume = volumeIn;
+        volume = volumeIn;
+    }
+
+    public float GetVolume()
+    {
+        return volume;
+    }
+
+    public void stopConstantBGFx()
+    {
+        myAudioSource.Stop();
     }
 
 }

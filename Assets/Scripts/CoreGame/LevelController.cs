@@ -1,31 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CoreGame.Sound;
 using UnityEngine;
 
-public class LevelController : MonoBehaviour
+public class LevelController : MonoBehaviour 
 {
 
     [SerializeField] public bool musicOn = false;
     [SerializeField] public bool bgFXOn = false;
     [SerializeField] public bool bgConstantFXOn = false;
-    [SerializeField] public bool fGSFXOn = false;
-    [SerializeField] GameObject GameplayUI;
-    [SerializeField] GameObject PauseMenu;
-    [SerializeField] MeshRenderer WaveBackgroundMeshRenderer;
+    [SerializeField] public bool fGsfxOn = false;
+    [SerializeField] GameObject gameplayUI;
+    [SerializeField] GameObject pauseMenu;
+    [SerializeField] MeshRenderer waveBackgroundMeshRenderer;
 
-    bool levelTimerFinished = false;
-    Music music;
-    BGFx bGFx;
-    FGSFx fGSFx;
-    BGConstantFx bGConstantFX;
-    Material myMaterial;
+    bool _levelTimerFinished = false;
+    private Music _music;
+    private BgFx _bGFx;
+    private FgSFx _fGSFx;
+    private BgConstantFx _bGConstantFX;
+    private Material _myMaterial;
     
     // Start is called before the first frame update
     void Start()
     {
-        setupAudioObjects();
-        startAudio();
-        setupMaterial();
+        SetupAudioObjects();
+        StartAudio();
+        SetupMaterial();
     }
 
     // Update is called once per frame
@@ -34,51 +35,51 @@ public class LevelController : MonoBehaviour
         // playTheMusic();
     }
 
-    void setupAudioObjects()
+    void SetupAudioObjects()
     {
-        music = FindObjectOfType<Music>();
-        bGConstantFX = FindObjectOfType<BGConstantFx>();
-        bGFx = FindObjectOfType<BGFx>();
-        fGSFx = FindObjectOfType<FGSFx>();
+        _music = FindObjectOfType<Music>();
+        _bGConstantFX = FindObjectOfType<BgConstantFx>();
+        _bGFx = FindObjectOfType<BgFx>();
+        _fGSFx = FindObjectOfType<FgSFx>();
     }
 
-    void setupMaterial()
+    void SetupMaterial()
     {
-        myMaterial = WaveBackgroundMeshRenderer.material;
+        _myMaterial = waveBackgroundMeshRenderer.material;
     }
 
-    public void startAudio()
+    public void StartAudio()
     {
         if (bgConstantFXOn)
-            bGConstantFX.playConstantBGFx();
+            _bGConstantFX.PlayConstantBgFx();
         if (bgFXOn)
-            bGFx.playBGFX();
+            _bGFx.PlayBgfx();
         if (musicOn)
-            playTheMusic();
-        if (fGSFXOn)
-            fGSFx.active = true;
+            PlayTheMusic();
+        if (fGsfxOn)
+            _fGSFx.active = true;
     }
 
-    public void stopAudio()
+    public void StopAudio()
     {
         if (!bgConstantFXOn)
-            bGConstantFX.stopConstantBGFx();
+            _bGConstantFX.StopConstantBgFx();
         if (!bgFXOn)
-            bGFx.stopBGFX();
+            _bGFx.StopBgfx();
         if (!musicOn)
-            music.stopTheMusic();
-        if (!fGSFXOn)
-            fGSFx.active = false;
+            _music.StopTheMusic();
+        if (!fGsfxOn)
+            _fGSFx.active = false;
 
     }
-    void playTheMusic()
+    void PlayTheMusic()
     {
-        music.playSpringMusic();
+        _music.PlaySpringMusic();
     }
 
     public void StopLevel()
     {
-        levelTimerFinished = true;
+        _levelTimerFinished = true;
         //StopSpawners();
         //StopGenerators();
     }
@@ -106,8 +107,8 @@ public class LevelController : MonoBehaviour
     public bool GetWavesFrozenValue()
     {
         int wavesFrozen = 1;
-        if (myMaterial)
-            myMaterial.GetInt("FreezeWaves");
+        if (_myMaterial)
+            _myMaterial.GetInt("FreezeWaves");
         if (wavesFrozen == 0)
             return true;
         else
@@ -115,29 +116,29 @@ public class LevelController : MonoBehaviour
     }
     public void StopWaveBackgroundMotion()
     {
-        myMaterial.SetInt("FreezeWaves", 0);
+        _myMaterial.SetInt("FreezeWaves", 0);
     }
 
     public void StartWaveBackgroundMotion()
     {
-        myMaterial.SetInt("FreezeWaves", 1);
+        _myMaterial.SetInt("FreezeWaves", 1);
     }
 
     public void PauseGame()
     {
         Debug.Log("Pause");
         Time.timeScale = 0;
-        GameplayUI.SetActive(false);
-        PauseMenu.SetActive(true);
+        gameplayUI.SetActive(false);
+        pauseMenu.SetActive(true);
     }
 
     public void UnPauseGame()
     {
         Debug.Log("Unpause");
         Time.timeScale = 1;
-        GameplayUI.SetActive(true);
-        PauseMenu.SetActive(false);
-        if (!levelTimerFinished)
+        gameplayUI.SetActive(true);
+        pauseMenu.SetActive(false);
+        if (!_levelTimerFinished)
         {
             StopSpawners();
             StartSpawners();

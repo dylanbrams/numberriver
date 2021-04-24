@@ -8,24 +8,24 @@ public class GameTimer : MonoBehaviour
 {
     [Tooltip("The number of seconds the level will last")]
     [SerializeField] float levelTime = 120;
-    bool levelFinished = false;
-    float normalizedTime = 0f;
-    int lastScoreCalc = 0;
-    PointsManager pointsManager;
-    TextMeshProUGUI tValue;
+    bool _levelFinished = false;
+    float _normalizedTime = 0f;
+    int _lastScoreCalc = 0;
+    PointsManager _pointsManager;
+    TextMeshProUGUI _tValue;
 
-    public float NormalizedTime { get => normalizedTime; set => normalizedTime = value; }
+    public float NormalizedTime { get => _normalizedTime; set => _normalizedTime = value; }
 
     private void Awake()
     {
-        pointsManager = transform.parent.GetComponentInChildren<PointsManager>();
-        tValue = GetComponentInChildren<TextMeshProUGUI>();
+        _pointsManager = transform.parent.GetComponentInChildren<PointsManager>();
+        _tValue = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!levelFinished)
+        if (!_levelFinished)
         {
             NormalizedTime = Time.timeSinceLevelLoad / levelTime;
             SetSliderValue();
@@ -37,10 +37,10 @@ public class GameTimer : MonoBehaviour
     private void CalculateScore()
     {
         int currentTime = Mathf.FloorToInt(Time.timeSinceLevelLoad);
-        if (currentTime - lastScoreCalc >= 1)
+        if (currentTime - _lastScoreCalc >= 1)
         {
-            pointsManager.IterateOneScore(currentTime);
-            lastScoreCalc = currentTime;
+            _pointsManager.IterateOneScore(currentTime);
+            _lastScoreCalc = currentTime;
         }
     }
 
@@ -48,7 +48,7 @@ public class GameTimer : MonoBehaviour
     {
         if (NormalizedTime > 1)
         {
-            levelFinished = true;
+            _levelFinished = true;
             FindObjectOfType<LevelController>().StopLevel();
         }
 
@@ -56,7 +56,7 @@ public class GameTimer : MonoBehaviour
     void SetSliderValue()
     {
         GetComponent<Slider>().value = NormalizedTime;
-        tValue.text = "t = " + NormalizedTime.ToString("n2");
+        _tValue.text = "t = " + NormalizedTime.ToString("n2");
     }
 
 }

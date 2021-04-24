@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CoreGame;
 using UnityEngine;
 
 namespace Assets.Scripts.Classes
@@ -7,22 +8,23 @@ namespace Assets.Scripts.Classes
 
     public class Function
     {
-        int fontSize = 8;
-        string latexRepresentation = "123";
-        public float randomIn;
-        public int charCount = 0;
+        private CofactorBasesAndMods _myBasesAndMods = new CofactorBasesAndMods();
+        int _fontSize = 8;
+        string _latexRepresentation = "123";
+        public float RandomIn;
+        public int CharCount = 0;
 
-        public string LatexRepresentation { get => latexRepresentation; set => latexRepresentation = value; }
-        public int FontSize { get => fontSize; set => fontSize = value; }
+        public string LatexRepresentation { get => _latexRepresentation; set => _latexRepresentation = value; }
+        public int FontSize { get => _fontSize; set => _fontSize = value; }
 
-        private List<FunctionComponent> functionComponents;
+        private List<FunctionComponent> _functionComponents;
 
         // Use this for initialization
         void Start()
         {
-            if (functionComponents == null)
+            if (_functionComponents == null)
             {
-                functionComponents = new List<FunctionComponent>();
+                _functionComponents = new List<FunctionComponent>();
             }
             GetFunctionParameters();
             GenerateFunctionParts(); // Note: this adds function components to the function
@@ -31,14 +33,14 @@ namespace Assets.Scripts.Classes
 
         public int CalculateOnce(double t, int p)
         {
-            int myValue = (int)functionComponents[0].GETCurrentValue(t, p);
+            int myValue = (int)_functionComponents[0].GETCurrentValue(t, p);
             Debug.Log(myValue.ToString());
             return myValue;
         }
 
         public void SetNewFunction(string newLatexInput)
         {
-            latexRepresentation = newLatexInput;
+            _latexRepresentation = newLatexInput;
             int number;
             if (int.TryParse(newLatexInput, out number))
             {
@@ -58,7 +60,7 @@ namespace Assets.Scripts.Classes
 
         public void ProcessCombine(Function functionIn)
         {
-            if (functionIn.functionComponents[0].GetFunctionComponentType() == FunctionComponentType.MetaFunction)
+            if (functionIn._functionComponents[0].GetFunctionComponentType() == FunctionComponentType.MetaFunction)
             {
                 /* process metafunctions {add, subtract, } here.
                 foreach (FunctionComponent currentComponent in functionComponents)
@@ -69,8 +71,8 @@ namespace Assets.Scripts.Classes
             }
             else
             {
-                latexRepresentation = functionIn.LatexRepresentation;
-                functionComponents = functionIn.functionComponents;
+                _latexRepresentation = functionIn.LatexRepresentation;
+                _functionComponents = functionIn._functionComponents;
             }
 
         }
@@ -78,7 +80,7 @@ namespace Assets.Scripts.Classes
 
         private void GenerateFunctionLatex()
         {
-            latexRepresentation = functionComponents[0].GETLatexRepresentation();
+            _latexRepresentation = _functionComponents[0].GETLatexRepresentation();
         }
 
         private void GenerateFunctionParts()
@@ -88,25 +90,29 @@ namespace Assets.Scripts.Classes
         
         private void GenerateRandomFunctionComponent()
         {
-            if (functionComponents == null)
+            if (_functionComponents == null)
             {
-                functionComponents = new List<FunctionComponent>();
+                _functionComponents = new List<FunctionComponent>();
             }
             int i = Random.Range(1, System.Enum.GetNames(typeof(FunctionComponentType)).Length);
             switch (i)
             {
                 case (int)FunctionComponentType.Polynomial:
-                    functionComponents.Add(new Polynomial());
+                    _functionComponents.Add(new Polynomial());
                     break;
                 case (int)FunctionComponentType.Logarithmic:
-                    functionComponents.Add(new Logarithm());
+                    _functionComponents.Add(new Logarithm());
                     break;
                 case (int)FunctionComponentType.Trigonometric:
-                    functionComponents.Add(new Trigonometric());
+                    _functionComponents.Add(new Trigonometric(
+                        _myBasesAndMods.TrigCofactorMin * _myBasesAndMods.TrigCofactorScale,
+                        _myBasesAndMods.TrigCofactorMax * _myBasesAndMods.TrigCofactorMax));
                     break;
                 case (int)FunctionComponentType.MetaFunction:
                     //functionComponents.Add(new MetaFunction());
-                    functionComponents.Add(new Trigonometric());
+                    _functionComponents.Add(new Trigonometric(
+                        _myBasesAndMods.TrigCofactorMin * _myBasesAndMods.TrigCofactorScale,
+                        _myBasesAndMods.TrigCofactorMax * _myBasesAndMods.TrigCofactorMax));
                     break;
 
                 default:

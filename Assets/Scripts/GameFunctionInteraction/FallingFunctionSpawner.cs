@@ -5,23 +5,23 @@ using UnityEngine;
 public class FallingFunctionSpawner : MonoBehaviour
 {
 
-    bool spawn = true;
+    bool _spawn = true;
     [SerializeField] float minSpawnRate = .3f;
     [SerializeField] float maxSpawnRate = 2f;
     [SerializeField] FallingFunction fallingFunctionPrefab;
     [SerializeField] Transform fallingFunctionParent;
     public int randomSeed = 65432;
-    private float xMin, xMax, yMin, yMax, zLoc;
+    private float _xMin, _xMax, _yMin, _yMax, _zLoc;
 
     private void Awake()
     {
         Vector3[] myRectTransform = new Vector3[4];
         gameObject.GetComponent<RectTransform>().GetWorldCorners(myRectTransform);
-        xMin = myRectTransform[0].x;
-        yMin = myRectTransform[0].y;
-        xMax = myRectTransform[2].x;
-        yMax = myRectTransform[2].y;
-        zLoc = myRectTransform[0].z;
+        _xMin = myRectTransform[0].x;
+        _yMin = myRectTransform[0].y;
+        _xMax = myRectTransform[2].x;
+        _yMax = myRectTransform[2].y;
+        _zLoc = myRectTransform[0].z;
     }
 
     // Start is called before the first frame update
@@ -33,13 +33,13 @@ public class FallingFunctionSpawner : MonoBehaviour
 
     public void StartSpawning()
     {
-        spawn = true;
+        _spawn = true;
         StartCoroutine(LoopSpawning());
     }
 
     private IEnumerator LoopSpawning()
     {
-        while (spawn == true)
+        while (_spawn == true)
         {
             yield return new WaitForSeconds(Random.Range(minSpawnRate, maxSpawnRate));
             SpawnFallingFunction();
@@ -50,7 +50,7 @@ public class FallingFunctionSpawner : MonoBehaviour
 
     public void StopSpawning()
     {
-        spawn = false;
+        _spawn = false;
     }
 
     private void SpawnFallingFunction()
@@ -63,16 +63,16 @@ public class FallingFunctionSpawner : MonoBehaviour
 
     private FallingFunction Spawn(FallingFunction fallingFunctionPrefab)
     {
-        Vector3 randomLoc = getRandomTransformInBoundaries();
+        Vector3 randomLoc = GETRandomTransformInBoundaries();
         return Instantiate(fallingFunctionPrefab, randomLoc, transform.rotation, fallingFunctionParent);
         
     }
 
-    private Vector3 getRandomTransformInBoundaries()
+    private Vector3 GETRandomTransformInBoundaries()
     {
 
-        return new Vector3(Random.Range(xMin, xMax),
-            Random.Range(yMin, yMax), zLoc
+        return new Vector3(Random.Range(_xMin, _xMax),
+            Random.Range(_yMin, _yMax), _zLoc
             );
     }
 

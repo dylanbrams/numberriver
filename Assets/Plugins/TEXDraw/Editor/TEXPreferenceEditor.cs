@@ -13,7 +13,7 @@ public class TEXPreferenceEditor : Editor
 {
     static internal class Styles
     {
-        public static GUIContent none = GUIContent.none;
+        public static GUIContent None = GUIContent.none;
 
         public static GUIContent[] HeaderUpdate = new GUIContent[]
         {
@@ -196,17 +196,17 @@ public class TEXPreferenceEditor : Editor
     [SerializeField]
     private int managerState = 0;
 
-    static public bool willFocusOnImport = false;
+    static public bool WillFocusOnImport = false;
 
     private void OnEnable()
     {
         TEXPreference.Initialize();
         Undo.undoRedoPerformed += RecordRedrawCallback;
-        configEditor = CreateEditor(TEXConfiguration.main);
-        if (willFocusOnImport)
+        _configEditor = CreateEditor(TEXConfiguration.main);
+        if (WillFocusOnImport)
         {
             FocusOnImporter();
-            willFocusOnImport = false;
+            WillFocusOnImport = false;
         }
     }
 
@@ -216,7 +216,7 @@ public class TEXPreferenceEditor : Editor
         {
             targetPreference.PushToDictionaries();
         }
-        DestroyImmediate(configEditor);
+        DestroyImmediate(_configEditor);
         Undo.undoRedoPerformed -= RecordRedrawCallback;
     }
 
@@ -277,8 +277,8 @@ public class TEXPreferenceEditor : Editor
         if (!targetPreference)
         {
             targetPreference = TEXPreference.main;
-            if (selectedFont != null)
-                SetPreviewFont(selectedFont.asset);
+            if (SelectedFont != null)
+                SetPreviewFont(SelectedFont.asset);
         }
         RecordUndo();
         DrawHeaderOption();
@@ -304,27 +304,27 @@ public class TEXPreferenceEditor : Editor
                 EditorGUILayout.EndVertical();
             }
 
-            if (selectedAsset != null)
+            if (SelectedAsset != null)
             {
                 // v.xMin += EditorGUIUtility.labelWidth + 4;
                 // v.height = Screen.height - ViewerHeight;
                 Rect v = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
                 CheckEvent(false);
-                switch (selectedAsset.type)
+                switch (SelectedAsset.type)
                 {
                     case TexAssetType.Font:
-                        DrawViewer(selectedFont, v, null);
+                        DrawViewer(SelectedFont, v, null);
                         break;
                     case TexAssetType.Sprite:
-                        DrawViewer(selectedSprite, v, (r, ch) =>
+                        DrawViewer(SelectedSprite, v, (r, ch) =>
                         {
-                            var sprite = selectedSprite;
+                            var sprite = SelectedSprite;
                             var sprt = sprite.GenerateMetric(ch.characterIndex);
                             GUI.DrawTextureWithTexCoords(r, sprite.assets.FirstOrDefault().texture, sprt.uv);
                         });
                         break;
                     case TexAssetType.FontSigned:
-                        DrawViewer(selectedSigned, v, (r, ch) =>
+                        DrawViewer(SelectedSigned, v, (r, ch) =>
                         {
 #if TEXDRAW_TMP
                             // Additional measurements for accurate display in TMP
@@ -373,16 +373,16 @@ public class TEXPreferenceEditor : Editor
 
     #region Character Management
 
-    private const float ViewerHeight = 120f;
+    private const float viewerHeight = 120f;
 
     [SerializeField]
     private Vector2 childSize;
 
     [SerializeField]
-    private Vector2 ManagerScroll;
+    private Vector2 managerScroll;
 
     [SerializeField]
-    private Vector2 SetterScroll;
+    private Vector2 setterScroll;
 
     [SerializeField]
     private int selectedFontIdx;
@@ -390,13 +390,13 @@ public class TEXPreferenceEditor : Editor
     [SerializeField]
     private int selectedCharIdx;
 
-    private TexFont selectedFont
+    private TexFont SelectedFont
     {
-        get { return selectedAsset as TexFont; }
-        set { selectedFontIdx = value.assetIndex; SetPreviewFont(selectedFont.asset); }
+        get { return SelectedAsset as TexFont; }
+        set { selectedFontIdx = value.assetIndex; SetPreviewFont(SelectedFont.asset); }
     }
 
-    private TexAsset selectedAsset
+    private TexAsset SelectedAsset
     {
         get
         {
@@ -405,24 +405,24 @@ public class TEXPreferenceEditor : Editor
         }
     }
 
-    private TexSprite selectedSprite
+    private TexSprite SelectedSprite
     {
-        get { return selectedAsset as TexSprite; }
+        get { return SelectedAsset as TexSprite; }
         set { selectedFontIdx = value.assetIndex; }
     }
 
-    private TexFontSigned selectedSigned
+    private TexFontSigned SelectedSigned
     {
-        get { return selectedAsset as TexFontSigned; }
+        get { return SelectedAsset as TexFontSigned; }
         set { selectedFontIdx = value.assetIndex; }
     }
 
-    private TexChar selectedChar
+    private TexChar SelectedChar
     {
         get
         {
-            if (selectedCharIdx >= selectedAsset.chars.Length) selectedCharIdx = selectedAsset.chars.Length - 1;
-            return selectedAsset.chars[selectedCharIdx];
+            if (selectedCharIdx >= SelectedAsset.chars.Length) selectedCharIdx = SelectedAsset.chars.Length - 1;
+            return SelectedAsset.chars[selectedCharIdx];
         }
         set
         {
@@ -431,15 +431,15 @@ public class TEXPreferenceEditor : Editor
         }
     }
 
-    private bool lastCharChanged = false;
-    private int setterState = 0;
+    private bool _lastCharChanged = false;
+    private int _setterState = 0;
 
     private void DrawManager()
     {
-        ManagerScroll = EditorGUILayout.BeginScrollView(ManagerScroll, false, false, GUILayout.ExpandHeight(true));
-        int Total = targetPreference.fonts.Length;
+        managerScroll = EditorGUILayout.BeginScrollView(managerScroll, false, false, GUILayout.ExpandHeight(true));
+        int total = targetPreference.fonts.Length;
         string lastCaption = null;
-        for (int i = 0; i < Total; i++)
+        for (int i = 0; i < total; i++)
         {
             //Draw Headers First, if needed
             TexAsset d = targetPreference.fonts[i];
@@ -453,8 +453,8 @@ public class TEXPreferenceEditor : Editor
             {
                 selectedFontIdx = i;
                 selectedCharIdx = Mathf.Clamp(selectedCharIdx, 0, d.chars.Length - 1);
-                if (selectedFont != null)
-                    SetPreviewFont(selectedFont.asset);
+                if (SelectedFont != null)
+                    SetPreviewFont(SelectedFont.asset);
             }
         }
         EditorGUILayout.EndScrollView();
@@ -496,13 +496,13 @@ public class TEXPreferenceEditor : Editor
             int x = i % 8, y = i / 8, l = selectedCharIdx;
             var r = new Rect(new Vector2((childSize.x + 2) * x + drawRect.x, (childSize.y + 2) * y + drawRect.y), childSize);
             var ch = chars[i];
-            if (CustomToggle(r, selectedCharIdx == i, draw == null ? Styles.GetCharMapContent(ch.characterIndex) : Styles.none, SubDetermineStyle(ch)))
+            if (CustomToggle(r, selectedCharIdx == i, draw == null ? Styles.GetCharMapContent(ch.characterIndex) : Styles.None, SubDetermineStyle(ch)))
             {
                 int newS = i + (selectedCharIdx - l);
-                if (newS != selectedCharIdx && lastCharChanged)
+                if (newS != selectedCharIdx && _lastCharChanged)
                 {
                     RecordDirty();
-                    lastCharChanged = false;
+                    _lastCharChanged = false;
                 }
                 selectedCharIdx = newS;
             }
@@ -517,25 +517,25 @@ public class TEXPreferenceEditor : Editor
     {
         //GUILayoutOption max = GUILayout.MaxWidth(EditorGUIUtility.labelWidth);
 
-        GUILayout.Label(selectedAsset.id, Styles.SetterTitle);
+        GUILayout.Label(SelectedAsset.id, Styles.SetterTitle);
 
         // The options for sprite assets
-        if (selectedSprite != null)
+        if (SelectedSprite != null)
         {
             EditorGUI.BeginChangeCheck();
-            float w = EditorGUILayout.FloatField("Line Offset", selectedSprite.lineOffset);
-            float h = EditorGUILayout.FloatField("Line Height", selectedSprite.lineHeight);
-            bool v = EditorGUILayout.Toggle("Alpha Only", selectedSprite.alphaOnly);
+            float w = EditorGUILayout.FloatField("Line Offset", SelectedSprite.lineOffset);
+            float h = EditorGUILayout.FloatField("Line Height", SelectedSprite.lineHeight);
+            bool v = EditorGUILayout.Toggle("Alpha Only", SelectedSprite.alphaOnly);
             if (EditorGUI.EndChangeCheck())
             {
                 RecordDirty();
-                selectedSprite.lineOffset = w;
-                selectedSprite.lineHeight = h;
-                selectedSprite.alphaOnly = v;
+                SelectedSprite.lineOffset = w;
+                SelectedSprite.lineHeight = h;
+                SelectedSprite.alphaOnly = v;
             }
             if (GUILayout.Button("Apply"))
             {
-                selectedSprite.ImportDictionary();
+                SelectedSprite.ImportDictionary();
                 targetPreference.CallRedraw();
             }
         }
@@ -543,19 +543,19 @@ public class TEXPreferenceEditor : Editor
         // The options for import presets
         EditorGUILayout.Space();
         EditorGUI.BeginChangeCheck();
-        var ctgImport = (ImportCharPresetsType)EditorGUILayout.EnumPopup("Import Preset", TexCharPresets.guessEnumPresets(selectedAsset.editorMetadata.catalogsToken));
+        var ctgImport = (ImportCharPresetsType)EditorGUILayout.EnumPopup("Import Preset", TexCharPresets.guessEnumPresets(SelectedAsset.editorMetadata.catalogsToken));
         if (EditorGUI.EndChangeCheck())
         {
             RecordUndo();
-            selectedAsset.editorMetadata.catalogsToken = TexCharPresets.charsFromEnum(ctgImport);
-            selectedAsset.ImportCharacters(selectedAsset.editorMetadata.catalogsToken);
+            SelectedAsset.editorMetadata.catalogsToken = TexCharPresets.charsFromEnum(ctgImport);
+            SelectedAsset.ImportCharacters(SelectedAsset.editorMetadata.catalogsToken);
         }
 
-        selectedAsset.editorMetadata.catalogsToken = GUILayout.TextArea(selectedAsset.editorMetadata.catalogsToken, Styles.ImporterPresetArea, GUILayout.Height(90));
+        SelectedAsset.editorMetadata.catalogsToken = GUILayout.TextArea(SelectedAsset.editorMetadata.catalogsToken, Styles.ImporterPresetArea, GUILayout.Height(90));
 
         if (GUILayout.Button("Reimport"))
         {
-            selectedAsset.ImportCharacters(selectedAsset.editorMetadata.catalogsToken);
+            SelectedAsset.ImportCharacters(SelectedAsset.editorMetadata.catalogsToken);
         }
 
         EditorGUILayout.Space();
@@ -565,7 +565,7 @@ public class TEXPreferenceEditor : Editor
             GUILayout.Label("Preview:");
             if (Event.current.type == EventType.Repaint || Event.current.type == EventType.Layout)
             {
-                var convers = TexCharPresets.CharsFromString(selectedAsset.editorMetadata.catalogsToken);
+                var convers = TexCharPresets.CharsFromString(SelectedAsset.editorMetadata.catalogsToken);
                 GUILayout.Label(string.Join(", ", convers) + " (" + convers.Length.ToString() + " )", Styles.ImporterOptionFontStyle, GUILayout.ExpandHeight(true));
 
             }
@@ -580,41 +580,41 @@ public class TEXPreferenceEditor : Editor
 
     private void DrawSetter()
     {
-        GUILayout.Label(selectedAsset.id, Styles.SetterTitle, GUILayout.MaxHeight(25));
+        GUILayout.Label(SelectedAsset.id, Styles.SetterTitle, GUILayout.MaxHeight(25));
         EditorGUILayout.BeginHorizontal();
         {
             GUILayout.Label("ID");
-            GUILayout.Label(string.Format("<b>{0}</b> (#{1:X})", selectedAsset.id, selectedAsset.assetIndex), Styles.SetterFont);
+            GUILayout.Label(string.Format("<b>{0}</b> (#{1:X})", SelectedAsset.id, SelectedAsset.assetIndex), Styles.SetterFont);
         }
         EditorGUILayout.EndHorizontal();
-        TexChar c = selectedChar;
+        TexChar c = SelectedChar;
         //        if (c.supported)
         {
             EditorGUILayout.BeginHorizontal();
             for (int i = 0; i < 2; i++)
             {
-                if (GUILayout.Toggle(i == setterState, Styles.SetterHeaderContent[i], Styles.SetterHeader[i]))
-                    setterState = i;
+                if (GUILayout.Toggle(i == _setterState, Styles.SetterHeaderContent[i], Styles.SetterHeader[i]))
+                    _setterState = i;
             }
             EditorGUILayout.EndHorizontal();
             EditorGUI.BeginChangeCheck();
-            if (setterState == 0)
+            if (_setterState == 0)
             {
                 // Create an thumbnail
-                switch (selectedAsset.type)
+                switch (SelectedAsset.type)
                 {
                     case TexAssetType.Font:
-                        EditorGUILayout.LabelField(Styles.GetCharMapContent(selectedAsset.chars[selectedCharIdx].characterIndex),
-                            Styles.SetterPreview, GUILayout.Height(selectedFont.asset.lineHeight * 2.2f));
+                        EditorGUILayout.LabelField(Styles.GetCharMapContent(SelectedAsset.chars[selectedCharIdx].characterIndex),
+                            Styles.SetterPreview, GUILayout.Height(SelectedFont.asset.lineHeight * 2.2f));
                         break;
                     case TexAssetType.Sprite:
-                        Rect r2 = EditorGUILayout.GetControlRect(GUILayout.Height(selectedSprite.lineHeight * EditorGUIUtility.labelWidth));
+                        Rect r2 = EditorGUILayout.GetControlRect(GUILayout.Height(SelectedSprite.lineHeight * EditorGUIUtility.labelWidth));
                         EditorGUI.LabelField(r2, GUIContent.none, Styles.SetterPreview);
                         r2.width *= .5f;
                         r2.x += r2.width * .5f;
 
-                        var sprt = selectedSprite.GenerateMetric(selectedChar.characterIndex);
-                        GUI.DrawTextureWithTexCoords(r2, selectedSprite.Texture(), sprt.uv);
+                        var sprt = SelectedSprite.GenerateMetric(SelectedChar.characterIndex);
+                        GUI.DrawTextureWithTexCoords(r2, SelectedSprite.Texture(), sprt.uv);
                         break;
 #if TEXDRAW_TMP
                     case TexAssetType.FontSigned:
@@ -634,7 +634,7 @@ public class TEXPreferenceEditor : Editor
                 // Basic info stuff
                 EditorGUILayout.LabelField("Index", string.Format("<b>{0}</b> (#{0:X2})", selectedCharIdx), Styles.SetterFont);
                 EditorGUILayout.LabelField("Character Index", "<b>" +
-                    selectedChar.characterIndex.ToString() + "</b> (#" + ((int)selectedChar.characterIndex).ToString("X2")
+                    SelectedChar.characterIndex.ToString() + "</b> (#" + ((int)SelectedChar.characterIndex).ToString("X2")
                     + ")", Styles.SetterFont);
 
                 EditorGUILayout.LabelField("Symbol Definition");
@@ -648,7 +648,7 @@ public class TEXPreferenceEditor : Editor
             }
             else
             {
-                SetterScroll = EditorGUILayout.BeginScrollView(SetterScroll, GUILayout.ExpandHeight(true));
+                setterScroll = EditorGUILayout.BeginScrollView(setterScroll, GUILayout.ExpandHeight(true));
                 {
                     EditorGUILayout.LabelField(string.Format("Hash \t : <b>{0}</b> (#{1:X1})", (int)c.characterIndex, (int)c.characterIndex), Styles.SetterFont);
                     c.larger = SubDrawThumbnail(c.larger, "Is Larger Character Exist?", Styles.SetterNextLarger);
@@ -674,7 +674,7 @@ public class TEXPreferenceEditor : Editor
             if (EditorGUI.EndChangeCheck())
             {
                 RecordDirty();
-                lastCharChanged = true;
+                _lastCharChanged = true;
             }
         }
     }
@@ -687,7 +687,7 @@ public class TEXPreferenceEditor : Editor
             EditorGUI.indentLevel++;
 
             if (!hash.Has)
-                hash = selectedChar;
+                hash = SelectedChar;
             TexAsset font = hash.GetFont;
             char ch = hash.character;
             EditorGUILayout.BeginHorizontal();
@@ -725,13 +725,13 @@ public class TEXPreferenceEditor : Editor
     private void CheckEvent(bool noCmd)
     {
         Event e = Event.current;
-        if (headerActive == 0 && selectedAsset != null)
+        if (headerActive == 0 && SelectedAsset != null)
         {
             if (e.isKey & e.type != EventType.KeyUp)
             {
                 if (e.control | noCmd)
                 {
-                    var length = selectedAsset.chars.Length;
+                    var length = SelectedAsset.chars.Length;
                     int verticalJump = 8;
                     if (e.keyCode == KeyCode.UpArrow)
                         selectedCharIdx = (int)Mathf.Repeat(selectedCharIdx - verticalJump, length);
@@ -742,14 +742,14 @@ public class TEXPreferenceEditor : Editor
                     else if (e.keyCode == KeyCode.RightArrow)
                         selectedCharIdx = (int)Mathf.Repeat(selectedCharIdx + 1, length);
                     else if (e.keyCode == KeyCode.Home)
-                        selectedAsset.chars[selectedCharIdx].type = (CharType)(int)Mathf.Repeat((int)selectedAsset.chars[selectedCharIdx].type - 1, 9);
+                        SelectedAsset.chars[selectedCharIdx].type = (CharType)(int)Mathf.Repeat((int)SelectedAsset.chars[selectedCharIdx].type - 1, 9);
                     else if (e.keyCode == KeyCode.End)
-                        selectedAsset.chars[selectedCharIdx].type = (CharType)(int)Mathf.Repeat((int)selectedAsset.chars[selectedCharIdx].type + 1, 9);
+                        SelectedAsset.chars[selectedCharIdx].type = (CharType)(int)Mathf.Repeat((int)SelectedAsset.chars[selectedCharIdx].type + 1, 9);
                     else
                         goto skipUse;
 
                     //This is just estimation... maybe?
-                    float ratio = selectedAsset.LineHeight() * ((Screen.width - EditorGUIUtility.labelWidth - 60) / 250) + 10;
+                    float ratio = SelectedAsset.LineHeight() * ((Screen.width - EditorGUIUtility.labelWidth - 60) / 250) + 10;
                     childSize.y = Mathf.Clamp(childSize.y, (selectedCharIdx / verticalJump - 3) * ratio, (selectedCharIdx / verticalJump - 1) * ratio);
                     e.Use();
                 skipUse:
@@ -766,13 +766,13 @@ public class TEXPreferenceEditor : Editor
     private const float configHeight = 355;
     // Vector2 configScroll;
 
-    private Editor configEditor;
+    private Editor _configEditor;
 
     private void DrawConfiguration()
     {
         EditorGUI.BeginChangeCheck();
 
-        configEditor.OnInspectorGUI();
+        _configEditor.OnInspectorGUI();
         if (EditorGUI.EndChangeCheck())
         {
             RecordDirty();
@@ -788,7 +788,7 @@ public class TEXPreferenceEditor : Editor
         EditorGUILayout.HelpBox("This section configures how much additional space is applied between characters by looking on each types. If you looking for what characters is considered as the type then look at 'Characters' tab.", MessageType.Info);
         EditorGUILayout.Space();
 
-        labelMatrixHeight = (Screen.width / (Screen.dpi / 96) - 150) / 9f;
+        _labelMatrixHeight = (Screen.width / (Screen.dpi / 96) - 150) / 9f;
         glueSimmetry = GUILayout.Toggle(glueSimmetry, "Edit Symmetrically", Styles.Buttons, GUILayout.Height(22));
         SubDrawMatrix();
     }
@@ -805,36 +805,36 @@ public class TEXPreferenceEditor : Editor
     }
 
     private const float labelMatrixWidth = 110;
-    private float labelMatrixHeight = 38;
+    private float _labelMatrixHeight = 38;
 
     [SerializeField]
     private bool glueSimmetry = true;
 
-    private Vector2 scrollGlue;
+    private Vector2 _scrollGlue;
 
     private void SubDrawMatrix()
     {
         Rect r = EditorGUILayout.GetControlRect(GUILayout.Width(labelMatrixWidth));
         GUI.matrix = Matrix4x4.TRS(new Vector2(labelMatrixWidth - r.x, r.y + labelMatrixWidth), Quaternion.Euler(0, 0, -90), Vector3.one);
         r.position = Vector2.zero;
-        r.y += labelMatrixHeight / 2 + 4;
+        r.y += _labelMatrixHeight / 2 + 4;
         for (int i = 9; i-- > 0;)
         {
             EditorGUI.LabelField(r, Styles.CharTypes[i], Styles.GlueLabelV);
-            r.y += labelMatrixHeight;
+            r.y += _labelMatrixHeight;
         }
         GUI.matrix = Matrix4x4.identity;
         EditorGUILayout.GetControlRect(GUILayout.Height(labelMatrixWidth - 36));
-        scrollGlue = EditorGUILayout.BeginScrollView(scrollGlue, GUILayout.Height(Screen.height - 320));
+        _scrollGlue = EditorGUILayout.BeginScrollView(_scrollGlue, GUILayout.Height(Screen.height - 320));
         r = EditorGUILayout.GetControlRect(GUILayout.Width(labelMatrixWidth));
-        r.height = labelMatrixHeight;
+        r.height = _labelMatrixHeight;
         float xx = r.x;
         int cur, now;
         for (int y = 0; y < 9; y++)
         {
             GUI.Label(r, Styles.CharTypes[y], Styles.GlueLabelH);
             r.x += labelMatrixWidth;
-            r.width = labelMatrixHeight;
+            r.width = _labelMatrixHeight;
             for (int x = 9; x-- > 0;)
             {
                 if (glueSimmetry)
@@ -854,15 +854,15 @@ public class TEXPreferenceEditor : Editor
                     if (cur != now)
                         GlueSet(y, x, now);
                 }
-                r.x += labelMatrixHeight;
+                r.x += _labelMatrixHeight;
                 if (glueSimmetry && ((8 - x) >= (8 - y)))
                     break;
             }
             r.x = xx;
-            r.y += labelMatrixHeight;
+            r.y += _labelMatrixHeight;
             r.width = labelMatrixWidth;
         }
-        EditorGUILayout.GetControlRect(GUILayout.Height(labelMatrixHeight * 9));
+        EditorGUILayout.GetControlRect(GUILayout.Height(_labelMatrixHeight * 9));
         EditorGUILayout.EndScrollView();
     }
 
@@ -872,9 +872,9 @@ public class TEXPreferenceEditor : Editor
 
     private void RecordDirty()
     {
-        if (headerActive == 0 && selectedAsset)
+        if (headerActive == 0 && SelectedAsset)
         {
-            EditorUtility.SetDirty(selectedAsset);
+            EditorUtility.SetDirty(SelectedAsset);
         }
         EditorUtility.SetDirty(this);
         EditorUtility.SetDirty(targetPreference);

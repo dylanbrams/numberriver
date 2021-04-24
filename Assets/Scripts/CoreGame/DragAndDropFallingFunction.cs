@@ -13,12 +13,12 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 	[SerializeField] GameObject draggingParticlePrefab;
 	[SerializeField] GameObject finishDragPrefab;
 	[SerializeField] float finishDragParticlesDestroyTime = 5;
-	public static bool dragDisabled = false;                                        // Drag start global disable
+	public static bool DragDisabled = false;                                        // Drag start global disable
 
-	public static GameObject draggedParticle;
-	public static DragAndDropFallingFunction draggedItem;                                      // Item that is dragged now
-	public static DragAndDropFallingFunctionCell sourceCell;                                       // From this cell dragged item is
-	public static bool draggingActive = false;
+	public static GameObject DraggedParticle;
+	public static DragAndDropFallingFunction DraggedItem;                                      // Item that is dragged now
+	public static DragAndDropFallingFunctionCell SourceCell;                                       // From this cell dragged item is
+	public static bool DraggingActive = false;
 
 	public delegate void DragEvent(DragAndDropFallingFunction item);
 	public static event DragEvent OnItemDragStartEvent;                             // Drag start event
@@ -28,12 +28,12 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 	private static string canvasName = "DragAndDropCanvas";                         // Name of canvas
 	private static int canvasSortOrder = 100;                                       // Sort order for canvas
 
-	private Vector2 previousMovement;
-	private Vector2 previousConstantForce;
-	private Rigidbody2D myRigidBody2D;
-	private ConstantForce2D constantForce2D;
-	private FallingFunction myFallingFunction;
-	private bool movementStopped = false;
+	private Vector2 _previousMovement;
+	private Vector2 _previousConstantForce;
+	private Rigidbody2D _myRigidBody2D;
+	private ConstantForce2D _constantForce2D;
+	private FallingFunction _myFallingFunction;
+	private bool _movementStopped = false;
 	public bool movementHalted = false;
 
 	/// <summary>
@@ -42,9 +42,9 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 	void Awake()
 	{
 		canvas = gameObject.GetComponentInParent<Canvas>();
-		myRigidBody2D = gameObject.GetComponent<Rigidbody2D>();
-		constantForce2D = gameObject.GetComponent<ConstantForce2D>();
-		myFallingFunction = gameObject.GetComponent<FallingFunction>();
+		_myRigidBody2D = gameObject.GetComponent<Rigidbody2D>();
+		_constantForce2D = gameObject.GetComponent<ConstantForce2D>();
+		_myFallingFunction = gameObject.GetComponent<FallingFunction>();
 	}
 
 	/// <summary>
@@ -54,15 +54,15 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 	public void OnBeginDrag(PointerEventData eventData)
 	{
 		Debug.Log("BeginDrag");
-		if (dragDisabled == false)
+		if (DragDisabled == false)
 		{
-			draggingActive = true;
-			sourceCell = GetCell();                                                 // Remember source cell
-			draggedItem = this;                                                     // Set as dragged item
+			DraggingActive = true;
+			SourceCell = GetCell();                                                 // Remember source cell
+			DraggedItem = this;                                                     // Set as dragged item
 																					// Create item's icon
 
-			draggedParticle = createParticleSystemInCanvas(draggingParticlePrefab, draggedItem.transform);
-			draggedParticle.name = "Particles";
+			DraggedParticle = CreateParticleSystemInCanvas(draggingParticlePrefab, DraggedItem.transform);
+			DraggedParticle.name = "Particles";
 
 			if (OnItemDragStartEvent != null)
 			{
@@ -77,10 +77,10 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 	/// <param name="data"></param>
 	public void OnDrag(PointerEventData data)
 	{
-		if (draggedParticle != null)
+		if (DraggedParticle != null)
 		{
 			Vector3 cameraPos = Camera.main.ScreenToWorldPoint((Input.mousePosition));                          // Item's icon follows to cursor in screen pixels
-			draggedParticle.transform.position = new Vector3(cameraPos.x, cameraPos.y);
+			DraggedParticle.transform.position = new Vector3(cameraPos.x, cameraPos.y);
 			StopMovement();
 			/* Debug.Log("Mouse Position: " + Input.mousePosition.ToString() + " Particle Position: " + draggedParticle.transform.position.ToString() +
 				" Dragged Item Name: " + draggedItem.name.ToString() + " Dragged Item Position: " + draggedItem.transform.position.ToString() +
@@ -96,12 +96,12 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 	{
 		Debug.Log("Drag Ended");
 		GameObject finishDragParticles;
-		if (draggedParticle)
+		if (DraggedParticle)
         {
-			finishDragParticles = createParticleSystemInCanvas(finishDragPrefab, draggedParticle.transform);
+			finishDragParticles = CreateParticleSystemInCanvas(finishDragPrefab, DraggedParticle.transform);
         }
 		else
-			finishDragParticles = createParticleSystemInCanvas(finishDragPrefab, transform);
+			finishDragParticles = CreateParticleSystemInCanvas(finishDragPrefab, transform);
 		ResetConditions();
 		Destroy(finishDragParticles, finishDragParticlesDestroyTime);
 	}
@@ -115,14 +115,14 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 		{
 			OnItemDragEndEvent(this);                                               // Notify all cells about item drag end
 		}
-		if (draggedParticle != null)
+		if (DraggedParticle != null)
 		{
-			Destroy(draggedParticle);                                                          // Destroy icon on item drop
+			Destroy(DraggedParticle);                                                          // Destroy icon on item drop
 		}
-		draggedItem = null;
-		draggedParticle = null;
-		sourceCell = null;
-		draggingActive = false;
+		DraggedItem = null;
+		DraggedParticle = null;
+		SourceCell = null;
+		DraggingActive = false;
 		RestartMovement();
 	}
 
@@ -139,7 +139,7 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 		}
 	}
 
-	private GameObject createParticleSystemInCanvas(GameObject particlePrefab, Transform inputTransform)
+	private GameObject CreateParticleSystemInCanvas(GameObject particlePrefab, Transform inputTransform)
     {
 		GameObject myObj = Instantiate(particlePrefab, inputTransform);
 		myObj.transform.SetParent(canvas.transform);
@@ -158,13 +158,13 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 
 	public void StopMovement()
     {
-		if (!movementStopped || movementHalted)
+		if (!_movementStopped || movementHalted)
 		{
-			movementStopped = true;
-			previousConstantForce = constantForce2D.force;
-			constantForce2D.force = new Vector2(0, 0);
-			previousMovement = myRigidBody2D.velocity;
-			myRigidBody2D.velocity = new Vector2(0, 0);
+			_movementStopped = true;
+			_previousConstantForce = _constantForce2D.force;
+			_constantForce2D.force = new Vector2(0, 0);
+			_previousMovement = _myRigidBody2D.velocity;
+			_myRigidBody2D.velocity = new Vector2(0, 0);
 		}
     }
 
@@ -172,9 +172,9 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
     {
 		if (!movementHalted)
         {
-			constantForce2D.force = previousConstantForce;
-			myRigidBody2D.velocity = previousMovement;
-			movementStopped = false;
+			_constantForce2D.force = _previousConstantForce;
+			_myRigidBody2D.velocity = _previousMovement;
+			_movementStopped = false;
 		}
 	}
 
@@ -185,7 +185,7 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 
 	public bool CanMove()
 	{
-		if (!movementHalted && !movementStopped)
+		if (!movementHalted && !_movementStopped)
 		{
 			return true;
 		}
@@ -202,6 +202,6 @@ public class DragAndDropFallingFunction : MonoBehaviour, IBeginDragHandler, IDra
 
 	public void ProcessCombine(FallingFunction functionIn)
     {
-		myFallingFunction.ProcessCombine(functionIn);
+		_myFallingFunction.ProcessCombine(functionIn);
     }
 }

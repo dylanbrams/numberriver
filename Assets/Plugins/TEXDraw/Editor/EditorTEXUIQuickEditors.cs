@@ -3,13 +3,13 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EditorTEXUIQuickEditors : EditorWindow
+public class EditorTexuiQuickEditors : EditorWindow
 {
     public RectTransform root;
     public Vector2 scr;
     public Vector2 size;
 
-    public const string helpInfo = "This editor helps you to edit TEXDraw UI quickly" +
+    public const string HelpInfo = "This editor helps you to edit TEXDraw UI quickly" +
         " as possible with benefit from TEXDraw's dedicated layout System.\n" +
         "Put an empty RectTransform and we'll begin editing";
 
@@ -26,7 +26,7 @@ public class EditorTEXUIQuickEditors : EditorWindow
         }
         else
         {
-            EditorGUILayout.HelpBox(helpInfo, MessageType.Info);
+            EditorGUILayout.HelpBox(HelpInfo, MessageType.Info);
         }
     }
 
@@ -84,7 +84,7 @@ public class EditorTEXUIQuickEditors : EditorWindow
             var t = layout.GetComponent<RectTransform>();
             if (!t)
                 t = layout.gameObject.AddComponent<RectTransform>();
-            inHorizontalLayout = isHorizontal;
+            _inHorizontalLayout = isHorizontal;
             for (int i = 0; i < t.childCount; i++)
             {
                 GUIDraw(t.GetChild(i).gameObject);
@@ -127,7 +127,7 @@ public class EditorTEXUIQuickEditors : EditorWindow
             var r = EditorGUILayout.GetControlRect(GUILayout.Width(50));
             if (GUI.Button(r, "+"))
             {
-                OnAddInside = true;
+                _onAddInside = true;
                 EditorUtility.DisplayCustomMenu(r, addContext, -1, new EditorUtility.SelectMenuItemFunction(OnAddPopup), layout.gameObject);
             }
             if (EditorGUI.EndChangeCheck())
@@ -154,18 +154,18 @@ public class EditorTEXUIQuickEditors : EditorWindow
         new GUIContent("Add Vertical Layout")
     };
 
-    private bool OnAddInside = false;
+    private bool _onAddInside = false;
 
     private void OnAddPopup(object u, string[] opt, int sel)
     {
-        if (sel == 0 && OnAddInside)
+        if (sel == 0 && _onAddInside)
         {
             if (((GameObject)u) == root.gameObject)
                 throw new ArgumentException("Can't duplicate root. It is simply impractical");
-            OnAddInside = false;
+            _onAddInside = false;
         }
         var transObj = ((GameObject)u).transform;
-        var parent = OnAddInside ? transObj : transObj.parent;
+        var parent = _onAddInside ? transObj : transObj.parent;
         GameObject newObj;
         switch (sel)
         {
@@ -192,7 +192,7 @@ public class EditorTEXUIQuickEditors : EditorWindow
                 break;
         }
         newObj.transform.SetParent(parent, false);
-        if (!OnAddInside)
+        if (!_onAddInside)
             newObj.transform.SetSiblingIndex(transObj.GetSiblingIndex());
 
         Undo.RegisterCreatedObjectUndo(newObj, "Creating a GameObject");
@@ -203,7 +203,7 @@ public class EditorTEXUIQuickEditors : EditorWindow
         Repaint();
     }
 
-    private bool inHorizontalLayout = false;
+    private bool _inHorizontalLayout = false;
 
     private void GUIHandleFitter(GameObject obj)
     {
@@ -211,7 +211,7 @@ public class EditorTEXUIQuickEditors : EditorWindow
         var fitter = obj.GetComponent<LayoutElement>();
         float h = fitter ? fitter.preferredWidth : -1, v = fitter ? fitter.preferredHeight : -1;
         //var rect = obj.GetComponent<RectTransform>();
-        if (inHorizontalLayout)
+        if (_inHorizontalLayout)
             h = EditorGUILayout.Slider(h, -1, 500);
         else
             v = EditorGUILayout.Slider(v, -1, 500);
@@ -236,7 +236,7 @@ public class EditorTEXUIQuickEditors : EditorWindow
             var r = EditorGUILayout.GetControlRect(GUILayout.Width(20f));
             if (GUI.Button(r, "+"))
             {
-                OnAddInside = false;
+                _onAddInside = false;
                 EditorUtility.DisplayCustomMenu(r, insertContext, -1, new EditorUtility.SelectMenuItemFunction(OnAddPopup), tex.gameObject);
             }
             if (GUI.Button(EditorGUILayout.GetControlRect(GUILayout.Width(20f)), "-"))

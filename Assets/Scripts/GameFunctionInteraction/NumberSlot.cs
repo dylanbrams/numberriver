@@ -7,12 +7,12 @@ using UnityEngine.EventSystems;
 public class NumberSlot : MonoBehaviour, IDropHandler
 {
 
-    private float initialXSize;
-    private float initialYSize;
+    private float _initialXSize;
+    private float _initialYSize;
     private void Start()
     {
-        initialXSize = transform.localScale.x;
-        initialYSize = transform.localScale.y;
+        _initialXSize = transform.localScale.x;
+        _initialYSize = transform.localScale.y;
     }
     public void OnDrop(PointerEventData pointerEventData)
     {

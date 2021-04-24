@@ -41,51 +41,51 @@ public class TEXSharedEditor
 
     private const int kAlignmentButtonWidth = 20;
 
-    private static int s_TextAlignmentHash = "DoTextAligmentControl".GetHashCode();
+    private static int sTextAlignmentHash = "DoTextAligmentControl".GetHashCode();
 
     static private class Styles
     {
-        public static GUIStyle alignmentButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
-        public static GUIStyle alignmentButtonMid = new GUIStyle(EditorStyles.miniButtonMid);
-        public static GUIStyle alignmentButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
+        public static GUIStyle AlignmentButtonLeft = new GUIStyle(EditorStyles.miniButtonLeft);
+        public static GUIStyle AlignmentButtonMid = new GUIStyle(EditorStyles.miniButtonMid);
+        public static GUIStyle AlignmentButtonRight = new GUIStyle(EditorStyles.miniButtonRight);
 
-        public static GUIContent m_EncodingContent;
+        public static GUIContent MEncodingContent;
 
-        public static GUIContent m_LeftAlignText;
-        public static GUIContent m_CenterAlignText;
-        public static GUIContent m_RightAlignText;
-        public static GUIContent m_TopAlignText;
-        public static GUIContent m_MiddleAlignText;
-        public static GUIContent m_BottomAlignText;
+        public static GUIContent MLeftAlignText;
+        public static GUIContent MCenterAlignText;
+        public static GUIContent MRightAlignText;
+        public static GUIContent MTopAlignText;
+        public static GUIContent MMiddleAlignText;
+        public static GUIContent MBottomAlignText;
 
-        public static GUIContent m_LeftAlignTextActive;
-        public static GUIContent m_CenterAlignTextActive;
-        public static GUIContent m_RightAlignTextActive;
-        public static GUIContent m_TopAlignTextActive;
-        public static GUIContent m_MiddleAlignTextActive;
-        public static GUIContent m_BottomAlignTextActive;
+        public static GUIContent MLeftAlignTextActive;
+        public static GUIContent MCenterAlignTextActive;
+        public static GUIContent MRightAlignTextActive;
+        public static GUIContent MTopAlignTextActive;
+        public static GUIContent MMiddleAlignTextActive;
+        public static GUIContent MBottomAlignTextActive;
 
         static Styles()
         {
-            m_EncodingContent = new GUIContent("Rich Text", "Use emoticons and colors");
+            MEncodingContent = new GUIContent("Rich Text", "Use emoticons and colors");
 
             // Horizontal Aligment Icons
-            m_LeftAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_left", "Left Align");
-            m_CenterAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_center", "Center Align");
-            m_RightAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_right", "Right Align");
-            m_LeftAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_left_active", "Left Align");
-            m_CenterAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_center_active", "Center Align");
-            m_RightAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_right_active", "Right Align");
+            MLeftAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_left", "Left Align");
+            MCenterAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_center", "Center Align");
+            MRightAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_right", "Right Align");
+            MLeftAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_left_active", "Left Align");
+            MCenterAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_center_active", "Center Align");
+            MRightAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_horizontally_right_active", "Right Align");
 
             // Vertical Aligment Icons
-            m_TopAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_top", "Top Align");
-            m_MiddleAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_center", "Middle Align");
-            m_BottomAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_bottom", "Bottom Align");
-            m_TopAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_top_active", "Top Align");
-            m_MiddleAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_center_active", "Middle Align");
-            m_BottomAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_bottom_active", "Bottom Align");
+            MTopAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_top", "Top Align");
+            MMiddleAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_center", "Middle Align");
+            MBottomAlignText = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_bottom", "Bottom Align");
+            MTopAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_top_active", "Top Align");
+            MMiddleAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_center_active", "Middle Align");
+            MBottomAlignTextActive = EditorGUIUtility.IconContent(@"GUISystem/align_vertically_bottom_active", "Bottom Align");
 
-            FixAlignmentButtonStyles(alignmentButtonLeft, alignmentButtonMid, alignmentButtonRight);
+            FixAlignmentButtonStyles(AlignmentButtonLeft, AlignmentButtonMid, AlignmentButtonRight);
         }
 
         private static void FixAlignmentButtonStyles(params GUIStyle[] styles)
@@ -102,7 +102,7 @@ public class TEXSharedEditor
     {
         GUIContent alingmentContent = new GUIContent("Alignment");
 
-        int id = GUIUtility.GetControlID(s_TextAlignmentHash, FocusType.Passive, position);
+        int id = GUIUtility.GetControlID(sTextAlignmentHash, FocusType.Passive, position);
 
         EditorGUIUtility.SetIconSize(new Vector2(15, 15));
         EditorGUI.BeginProperty(position, alingmentContent, alignment);
@@ -145,7 +145,7 @@ public class TEXSharedEditor
         position.width = kAlignmentButtonWidth;
 
         EditorGUI.BeginChangeCheck();
-        EditorToggle(position, leftAlign, leftAlign ? Styles.m_LeftAlignTextActive : Styles.m_LeftAlignText, Styles.alignmentButtonLeft);
+        EditorToggle(position, leftAlign, leftAlign ? Styles.MLeftAlignTextActive : Styles.MLeftAlignText, Styles.AlignmentButtonLeft);
         if (EditorGUI.EndChangeCheck())
         {
             SetHorizontalAlignment(alignment, 0f);
@@ -153,7 +153,7 @@ public class TEXSharedEditor
 
         position.x += position.width;
         EditorGUI.BeginChangeCheck();
-        EditorToggle(position, centerAlign, centerAlign ? Styles.m_CenterAlignTextActive : Styles.m_CenterAlignText, Styles.alignmentButtonMid);
+        EditorToggle(position, centerAlign, centerAlign ? Styles.MCenterAlignTextActive : Styles.MCenterAlignText, Styles.AlignmentButtonMid);
         if (EditorGUI.EndChangeCheck())
         {
             SetHorizontalAlignment(alignment, 0.5f);
@@ -161,7 +161,7 @@ public class TEXSharedEditor
 
         position.x += position.width;
         EditorGUI.BeginChangeCheck();
-        EditorToggle(position, rightAlign, rightAlign ? Styles.m_RightAlignTextActive : Styles.m_RightAlignText, Styles.alignmentButtonRight);
+        EditorToggle(position, rightAlign, rightAlign ? Styles.MRightAlignTextActive : Styles.MRightAlignText, Styles.AlignmentButtonRight);
         if (EditorGUI.EndChangeCheck())
         {
             SetHorizontalAlignment(alignment, 1f);
@@ -192,7 +192,7 @@ public class TEXSharedEditor
 
         // position.x += position.width;
         EditorGUI.BeginChangeCheck();
-        EditorToggle(position, topAlign, topAlign ? Styles.m_TopAlignTextActive : Styles.m_TopAlignText, Styles.alignmentButtonLeft);
+        EditorToggle(position, topAlign, topAlign ? Styles.MTopAlignTextActive : Styles.MTopAlignText, Styles.AlignmentButtonLeft);
         if (EditorGUI.EndChangeCheck())
         {
             SetVerticalAlignment(alignment, 1f);
@@ -200,7 +200,7 @@ public class TEXSharedEditor
 
         position.x += position.width;
         EditorGUI.BeginChangeCheck();
-        EditorToggle(position, middleAlign, middleAlign ? Styles.m_MiddleAlignTextActive : Styles.m_MiddleAlignText, Styles.alignmentButtonMid);
+        EditorToggle(position, middleAlign, middleAlign ? Styles.MMiddleAlignTextActive : Styles.MMiddleAlignText, Styles.AlignmentButtonMid);
         if (EditorGUI.EndChangeCheck())
         {
             SetVerticalAlignment(alignment, 0.5f);
@@ -208,7 +208,7 @@ public class TEXSharedEditor
 
         position.x += position.width;
         EditorGUI.BeginChangeCheck();
-        EditorToggle(position, bottomAlign, bottomAlign ? Styles.m_BottomAlignTextActive : Styles.m_BottomAlignText, Styles.alignmentButtonRight);
+        EditorToggle(position, bottomAlign, bottomAlign ? Styles.MBottomAlignTextActive : Styles.MBottomAlignText, Styles.AlignmentButtonRight);
         if (EditorGUI.EndChangeCheck())
         {
             SetVerticalAlignment(alignment, 0f);
@@ -272,8 +272,8 @@ public class ScaleOffsetDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        var p_scale = property.FindPropertyRelative("scale");
-        var p_offset = property.FindPropertyRelative("offset");
+        var pScale = property.FindPropertyRelative("scale");
+        var pOffset = property.FindPropertyRelative("offset");
         EditorGUILayout.BeginHorizontal();
         {
             var l = EditorGUIUtility.labelWidth;
@@ -281,8 +281,8 @@ public class ScaleOffsetDrawer : PropertyDrawer
             EditorGUILayout.LabelField(label, GUILayout.Width(l));
             EditorGUIUtility.labelWidth = 40;
             EditorGUI.indentLevel = 0;
-            EditorGUILayout.PropertyField(p_scale);
-            EditorGUILayout.PropertyField(p_offset);
+            EditorGUILayout.PropertyField(pScale);
+            EditorGUILayout.PropertyField(pOffset);
             EditorGUIUtility.labelWidth = l;
             EditorGUI.indentLevel = i;
         }
@@ -334,8 +334,8 @@ public class FindReplaceDrawer : PropertyDrawer
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        var p_find = property.FindPropertyRelative("find");
-        var p_replace = property.FindPropertyRelative("replace");
+        var pFind = property.FindPropertyRelative("find");
+        var pReplace = property.FindPropertyRelative("replace");
         var l = EditorGUIUtility.labelWidth;
         var i = EditorGUI.indentLevel;
 
@@ -347,8 +347,8 @@ public class FindReplaceDrawer : PropertyDrawer
 
             EditorGUI.indentLevel = 0;
 
-            EditorGUILayout.PropertyField(p_find, GUIContent.none);
-            EditorGUILayout.PropertyField(p_replace, GUIContent.none, GUILayout.Width(l));
+            EditorGUILayout.PropertyField(pFind, GUIContent.none);
+            EditorGUILayout.PropertyField(pReplace, GUIContent.none, GUILayout.Width(l));
         }
         EditorGUILayout.EndHorizontal();
 

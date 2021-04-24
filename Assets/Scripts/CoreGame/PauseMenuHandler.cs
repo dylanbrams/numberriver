@@ -1,23 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using CoreGame.Sound;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PauseMenuHandler : MonoBehaviour
 {
-    [SerializeField] BGFx bGFx;
-    [SerializeField] FGSFx fGSFx;
-    [SerializeField] BGConstantFx bGConstantFX;
+    [SerializeField] BgFx bGFx;
+    [SerializeField] FgSFx fGsFx;
+    [SerializeField] BgConstantFx bGConstantFX;
     [SerializeField] LevelController levelController;
     [SerializeField] Music music;
-    [SerializeField] GameObject MusicSlider;
-    [SerializeField] GameObject FGSFXSlider;
-    [SerializeField] GameObject BGFxSlider;
-    [SerializeField] GameObject BGConstantFXSlider;
-    [SerializeField] GameObject MusicToggle;
-    [SerializeField] GameObject FGSFXToggle;
-    [SerializeField] GameObject BGFxToggle;
-    [SerializeField] GameObject BGConstantFXToggle;
+    [SerializeField] GameObject musicSlider;
+    [SerializeField] GameObject fgsfxSlider;
+    [SerializeField] GameObject bgFxSlider;
+    [SerializeField] GameObject bgConstantFXSlider;
+    [SerializeField] GameObject musicToggle;
+    [SerializeField] GameObject fgsfxToggle;
+    [SerializeField] GameObject bgFxToggle;
+    [SerializeField] GameObject bgConstantFXToggle;
 
     private void Awake()
     {
@@ -27,26 +28,26 @@ public class PauseMenuHandler : MonoBehaviour
 
     private void SetupToggleValues()
     {
-        Toggle musicToggle = MusicToggle.GetComponent<Toggle>();
+        Toggle musicToggle = this.musicToggle.GetComponent<Toggle>();
         musicToggle.isOn = levelController.musicOn;
-        Toggle fGSFXToggle = FGSFXToggle.GetComponent<Toggle>();
-        fGSFXToggle.isOn = levelController.fGSFXOn;
-        Toggle bGFxToggle = BGFxToggle.GetComponent<Toggle>();
+        Toggle fGsfxToggle = fgsfxToggle.GetComponent<Toggle>();
+        fGsfxToggle.isOn = levelController.fGsfxOn;
+        Toggle bGFxToggle = bgFxToggle.GetComponent<Toggle>();
         bGFxToggle.isOn = levelController.bgFXOn;
-        Toggle bGConstantFXToggle = BGConstantFXToggle.GetComponent<Toggle>();
+        Toggle bGConstantFXToggle = bgConstantFXToggle.GetComponent<Toggle>();
         bGConstantFXToggle.isOn = levelController.bgConstantFXOn;
 
     }
 
     private void SetupSliderValues()
     {
-        Slider musicSlider = MusicSlider.GetComponent<Slider>();
+        Slider musicSlider = this.musicSlider.GetComponent<Slider>();
         musicSlider.value = music.GetVolume();
-        Slider fGSFXSlider = FGSFXSlider.GetComponent<Slider>();
-        fGSFXSlider.value = fGSFx.GetVolume();
-        Slider bGFxSlider = BGFxSlider.GetComponent<Slider>();
+        Slider fGsfxSlider = fgsfxSlider.GetComponent<Slider>();
+        fGsfxSlider.value = fGsFx.GetVolume();
+        Slider bGFxSlider = bgFxSlider.GetComponent<Slider>();
         bGFxSlider.value = bGFx.GetVolume();
-        Slider bGConstantFXSlider = BGConstantFXSlider.GetComponent<Slider>();
+        Slider bGConstantFXSlider = bgConstantFXSlider.GetComponent<Slider>();
         bGConstantFXSlider.value = bGConstantFX.GetVolume();
     }
 
@@ -60,34 +61,34 @@ public class PauseMenuHandler : MonoBehaviour
 
     }
 
-    private void startStopAudio(bool value)
+    private void StartStopAudio(bool value)
     {
         if (value == false)
-            levelController.stopAudio();
+            levelController.StopAudio();
         else
-            levelController.startAudio();
+            levelController.StartAudio();
     }
-    public void ToggleBGFx(bool value)
+    public void ToggleBgFx(bool value)
     {
         levelController.bgFXOn = value;
-        startStopAudio(value);
+        StartStopAudio(value);
     }
 
-    public void ToggleBGConstantFx(bool value)
+    public void ToggleBgConstantFx(bool value)
     {
         levelController.bgConstantFXOn = value;
-        startStopAudio(value);
+        StartStopAudio(value);
     }
 
-    public void ToggleFGSFx(bool value)
+    public void ToggleFgsFx(bool value)
     {
-        levelController.fGSFXOn = value;
+        levelController.fGsfxOn = value;
     }
 
     public void ToggleMusic(bool value)
     {
         levelController.musicOn = value;
-        startStopAudio(value);
+        StartStopAudio(value);
     }
 
     public void MusicSliderChange(float value)
@@ -96,17 +97,17 @@ public class PauseMenuHandler : MonoBehaviour
             music.SetVolume(value);
     }
 
-    public void FGSFXSliderChange(float value)
+    public void FgsfxSliderChange(float value)
     {
-        if (fGSFx)
-            fGSFx.SetVolume(value);
+        if (fGsFx)
+            fGsFx.SetVolume(value);
     }
-    public void BGFxSliderChange(float value)
+    public void BgFxSliderChange(float value)
     {
         if (bGFx)
             bGFx.SetVolume(value);
     }
-    public void BGConsantFXSliderChange(float value)
+    public void BgConsantFXSliderChange(float value)
     {
         if (bGConstantFX)
             bGConstantFX.SetVolume(value);

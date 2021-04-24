@@ -7,41 +7,41 @@ using TMPro;
 public class PointsManager : MonoBehaviour
 {
 
-    [SerializeField] GameObject EquationHolderSet;
-    int currentScore = 0;
-    List<DragAndDropFallingFunctionCell> CellList;
-    TextMeshProUGUI scoreTMP; // Note: The scoreboard for this points manager needs to be in its children.
-    GameTimer gameTimer;
+    [SerializeField] GameObject equationHolderSet;
+    int _currentScore = 0;
+    List<DragAndDropFallingFunctionCell> _cellList;
+    TextMeshProUGUI _scoreTMP; // Note: The scoreboard for this points manager needs to be in its children.
+    GameTimer _gameTimer;
 
-    public int CurrentScore { get => currentScore; set => currentScore = value; }
+    public int CurrentScore { get => _currentScore; set => _currentScore = value; }
 
     // Start is called before the first frame update
     void Awake()
     {
-        scoreTMP = GetComponentInChildren<TextMeshProUGUI>();
-        gameTimer = FindObjectOfType<GameTimer>();
+        _scoreTMP = GetComponentInChildren<TextMeshProUGUI>();
+        _gameTimer = FindObjectOfType<GameTimer>();
     }
 
     public void IterateOneScore(float timeFactor)
     {
-        FallingFunction[] equationHolders = EquationHolderSet.GetComponentsInChildren<FallingFunction>();
+        FallingFunction[] equationHolders = equationHolderSet.GetComponentsInChildren<FallingFunction>();
         int addToScore = 0;
         foreach (FallingFunction currentContainer in equationHolders)
         {
-            Function currentEquation = currentContainer.getFunction();
+            Function currentEquation = currentContainer.GETFunction();
             if (currentEquation != null)
             {
-                int currentScore = currentEquation.CalculateOnce(gameTimer.NormalizedTime, CurrentScore);
+                int currentScore = currentEquation.CalculateOnce(_gameTimer.NormalizedTime, CurrentScore);
                 currentContainer.DisplayPoints(currentScore);
                 addToScore += currentScore;
             }
         }
-        currentScore += Mathf.Max(0, addToScore);
+        _currentScore += Mathf.Max(0, addToScore);
         UpdatePlayerScoreDisplay();
     }
 
     void UpdatePlayerScoreDisplay()
     {
-        scoreTMP.text = CurrentScore.ToString("D8");
+        _scoreTMP.text = CurrentScore.ToString("D8");
     }
  }

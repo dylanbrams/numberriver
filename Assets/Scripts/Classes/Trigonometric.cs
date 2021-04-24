@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Globalization;
+using Unity.Mathematics;
+using UnityRandom = UnityEngine.Random;
 
 namespace Assets.Scripts.Classes
 {
     class Trigonometric : FunctionComponent
     {
-        private float cofactor;
-        private float periodCount;
-        float imaginaryComponent = 0;
-        private string latexRepresentation;
+        private float _cofactorMin;
+        private float _cofactorMax;
+        private float _cofactorDefault = 2f;
+        private float _cofactor;
+        private float _periodCount = 1;
+        float _imaginaryComponent = 0;
+        private string _latexRepresentation;
         private  enum TrigFunctionType
         {
             Sin = 1,
@@ -18,15 +24,25 @@ namespace Assets.Scripts.Classes
             ATan = 6,
         }
 
-        public Trigonometric()
+        public Trigonometric(float cofactorMin, float cofactorMax)
         {
-            periodCount = 1;
-            cofactor = 20;
+            _cofactorMin = cofactorMin;
+            _cofactorMax = cofactorMax;
+            
+            _cofactor = UnityRandom.Range(_cofactorMin, _cofactorMax);
+            if (-1 < math.abs(_cofactor) || math.abs(_cofactor)  < 1)
+            {
+                _cofactor = _cofactorDefault;
+            }
+            else
+            {
+                _cofactor = math.round(_cofactor);
+            }
             SetLatexRepresentation();
         }
         public override void AddToComponent(float cofactorInput)
         {
-            this.cofactor += cofactorInput;
+            this._cofactor += cofactorInput;
         }
 
         public override void DeriveComponent()
@@ -41,7 +57,7 @@ namespace Assets.Scripts.Classes
 
         public override double GETCurrentValue(double t, int p)
         {
-            return cofactor * Math.Sin( 2 * Math.PI * periodCount * t);
+            return _cofactor * Math.Sin( 2 * Math.PI * _periodCount * t);
         }
 
         public override FunctionComponentType GetFunctionComponentType()
@@ -51,7 +67,7 @@ namespace Assets.Scripts.Classes
 
         public override string GETLatexRepresentation()
         {
-            return latexRepresentation;
+            return _latexRepresentation;
         }
 
         public override void IntegrateComponent()
@@ -64,9 +80,9 @@ namespace Assets.Scripts.Classes
             throw new System.NotImplementedException();
         }
 
-        public override void SetLatexRepresentation()
+        public sealed override void SetLatexRepresentation()
         {
-            latexRepresentation = "{20}{sin}({t})";
+            _latexRepresentation = "{"+_cofactor.ToString(CultureInfo.CurrentCulture)+"}{sin}({t})";
         }
     }
 }

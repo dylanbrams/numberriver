@@ -26,11 +26,11 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
 
     public class DropEventDescriptor                                        // Info about item's drop event
     {
-        public TriggerType triggerType;                                     // Type of drag and drop trigger
+        public TriggerType TriggerType;                                     // Type of drag and drop trigger
         // public DragAndDropTMPCell sourceCell;                                  // From this cell item was dragged
-        public DragAndDropFallingFunctionCell destinationCell;                             // Into this cell item was dropped
-        public DragAndDropFallingFunction item;                                        // Dropped item
-        public bool permission;                                             // Decision need to be made on request
+        public DragAndDropFallingFunctionCell DestinationCell;                             // Into this cell item was dropped
+        public DragAndDropFallingFunction Item;                                        // Dropped item
+        public bool Permission;                                             // Decision need to be made on request
     }
 
     [Tooltip("Functional type of this cell")]
@@ -41,11 +41,11 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     [SerializeField] public Color full = new Color();                                        // Sprite color for filled cell
     [Tooltip("This cell has unlimited amount of items")]
     public bool unlimitedSource = false;                                    // Item from this cell will be cloned on drag start
-    [SerializeField] public TMPro.TextMeshProUGUI LinkedPointsDisplay;
+    [SerializeField] public TMPro.TextMeshProUGUI linkedPointsDisplay;
 
-    private DragAndDropFallingFunction myDadItem;										// Item of this DaD cell
-    private FallingFunction myFunction;
-    private int DropCount = 0;
+    private DragAndDropFallingFunction _myDadItem;										// Item of this DaD cell
+    private FallingFunction _myFunction;
+    private int _dropCount = 0;
 
     void OnEnable()
     {
@@ -69,9 +69,9 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     private void OnAnyItemDragStart(DragAndDropFallingFunction item)
     {
         UpdateMyItem();
-        if (myDadItem != null)
+        if (_myDadItem != null)
         {
-            myDadItem.MakeRaycast(false);                                   // Disable item's raycast for correct drop handling
+            _myDadItem.MakeRaycast(false);                                   // Disable item's raycast for correct drop handling
         }
     }
 
@@ -83,9 +83,9 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     {
         Debug.Log("OnAnyItemDragEnd Executed!");
         UpdateMyItem();
-        if (myDadItem != null)
+        if (_myDadItem != null)
         {
-            myDadItem.MakeRaycast(true);
+            _myDadItem.MakeRaycast(true);
 
         }
         UpdateBackgroundState();
@@ -98,9 +98,9 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     public void OnDrop(PointerEventData data)
     {
         Debug.Log("OnDrop Executed!");
-        if (DragAndDropFallingFunction.draggingActive == true)
+        if (DragAndDropFallingFunction.DraggingActive == true)
         {
-            DragAndDropFallingFunction item = DragAndDropFallingFunction.draggedItem;
+            DragAndDropFallingFunction item = DragAndDropFallingFunction.DraggedItem;
             if (item != null)
             {
                 DropEventDescriptor desc = new DropEventDescriptor();
@@ -109,15 +109,15 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
                 {
                     case CellType.DropOnly:                             // Item only can be dropped into destination cell
                         // Fill event descriptor
-                        desc.item = item;
-                        desc.destinationCell = this;
+                        desc.Item = item;
+                        desc.DestinationCell = this;
                         SendRequest(desc);                              // Send drop request
                         StartCoroutine(NotifyOnDragEnd(desc));          // Send notification after drop will be finished
-                        if (desc.permission == true)                    // If drop permitted by application
+                        if (desc.Permission == true)                    // If drop permitted by application
                         {
                             PlaceItem(item);                            // Place dropped item in this cell
                         }
-                        myDadItem.StopMovement();
+                        _myDadItem.StopMovement();
                         break;
                     default:
                         break;
@@ -136,19 +136,19 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     {
         if (tmpObj != null)
         {
-            DropCount++;
-            Debug.Log("Time to modify equations. " + DropCount.ToString());
-            if (myDadItem == null)
+            _dropCount++;
+            Debug.Log("Time to modify equations. " + _dropCount.ToString());
+            if (_myDadItem == null)
             {
                 DragAndDropCell cell = tmpObj.GetComponentInParent<DragAndDropCell>();
                 tmpObj.transform.SetParent(transform, false);
                 tmpObj.transform.localPosition = Vector3.zero;
                 tmpObj.MakeRaycast(true);
-                myDadItem = tmpObj;
+                _myDadItem = tmpObj;
             }
             else
             {
-                myDadItem.ProcessCombine(tmpObj.GetComponent<FallingFunction>());
+                _myDadItem.ProcessCombine(tmpObj.GetComponent<FallingFunction>());
             }
         }
         UpdateBackgroundState();
@@ -160,20 +160,20 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     private void DestroyItem()
     {
         UpdateMyItem();
-        if (myDadItem != null)
+        if (_myDadItem != null)
         {
             DropEventDescriptor desc = new DropEventDescriptor();
             // Fill event descriptor
-            desc.triggerType = TriggerType.ItemWillBeDestroyed;
-            desc.item = myDadItem;
-            desc.destinationCell = this;
+            desc.TriggerType = TriggerType.ItemWillBeDestroyed;
+            desc.Item = _myDadItem;
+            desc.DestinationCell = this;
             SendNotification(desc);                                         // Notify application about item destruction
-            if (myDadItem != null)
+            if (_myDadItem != null)
             {
-                Destroy(myDadItem.gameObject);
+                Destroy(_myDadItem.gameObject);
             }
         }
-        myDadItem = null;
+        _myDadItem = null;
         UpdateBackgroundState();
     }
 
@@ -200,10 +200,10 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
         bool result = false;
         if (desc != null)
         {
-            desc.triggerType = TriggerType.DropRequest;
-            desc.permission = true;
+            desc.TriggerType = TriggerType.DropRequest;
+            desc.Permission = true;
             SendNotification(desc);
-            result = desc.permission;
+            result = desc.Permission;
         }
         return result;
     }
@@ -220,7 +220,7 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
         {
             yield return new WaitForEndOfFrame();
         }
-        desc.triggerType = TriggerType.DropEventEnd;
+        desc.TriggerType = TriggerType.DropEventEnd;
         SendNotification(desc);
     }
 
@@ -233,7 +233,7 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
         Image bg = GetComponent<Image>();
         if (bg != null)
         {
-            bg.color = myDadItem != null ? full : empty;
+            bg.color = _myDadItem != null ? full : empty;
         }
     }
 
@@ -242,12 +242,12 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     /// </summary>
     public void UpdateMyItem()
     {
-        myDadItem = GetComponentInChildren<DragAndDropFallingFunction>();
-        myFunction = GetComponentInChildren<FallingFunction>();
-        if (myFunction)
+        _myDadItem = GetComponentInChildren<DragAndDropFallingFunction>();
+        _myFunction = GetComponentInChildren<FallingFunction>();
+        if (_myFunction)
         {
-            LinkedPointsDisplay.gameObject.SetActive(true);
-            myFunction.setPointsDisplay(LinkedPointsDisplay);
+            linkedPointsDisplay.gameObject.SetActive(true);
+            _myFunction.SetPointsDisplay(linkedPointsDisplay);
         }
     }
 
@@ -257,7 +257,7 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
     /// <returns> Item </returns>
     public DragAndDropFallingFunction GetItem()
     {
-        return myDadItem;
+        return _myDadItem;
     }
 
     /// <summary>
@@ -271,9 +271,9 @@ public class DragAndDropFallingFunctionCell : MonoBehaviour,  IDropHandler
             PlaceItem(newItem);
             DropEventDescriptor desc = new DropEventDescriptor();
             // Fill event descriptor
-            desc.triggerType = TriggerType.ItemAdded;
-            desc.item = newItem;
-            desc.destinationCell = this;
+            desc.TriggerType = TriggerType.ItemAdded;
+            desc.Item = newItem;
+            desc.DestinationCell = this;
             SendNotification(desc);
         }
     }

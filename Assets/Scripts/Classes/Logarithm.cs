@@ -2,11 +2,11 @@
 {
     internal class Logarithm : FunctionComponent
     {
-        private int cofactor = 1;
-        private int logBase = 10;
-        private string latexRepresentation = "{log}_{10}{t}";
-        private bool targetT = true;
-        private bool targetP = false;
+        private int _cofactor = 1;
+        private int _logBase = 10;
+        private string _latexRepresentation = "{log}_{10}{t}";
+        private bool _targetT = true;
+        private bool _targetP = false;
 
         public override FunctionComponentType GetFunctionComponentType()
         {
@@ -49,12 +49,12 @@
 
         public override string GETLatexRepresentation()
         {
-            return latexRepresentation;
+            return _latexRepresentation;
         }
 
         public override double GETCurrentValue(double t, int p)
         {
-            return System.Math.Log(t, logBase) * cofactor;
+            return System.Math.Log(t, _logBase) * _cofactor;
         }
     }
 }

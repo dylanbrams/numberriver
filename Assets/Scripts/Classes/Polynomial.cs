@@ -4,16 +4,16 @@ namespace Assets.Scripts.Classes
 {
     internal class Polynomial : FunctionComponent
     {
-        private int cofactor;
-        private int power;
-        private string latexRepresentation;
-        private bool targetT = true;
-        private bool targetP = false;
+        private int _cofactor;
+        private int _power;
+        private string _latexRepresentation;
+        private bool _targetT = true;
+        private bool _targetP = false;
         public Polynomial()
         {
-            cofactor = 50;
-            power = -1;
-            latexRepresentation = "\\frac{50}{t}";
+            _cofactor = 50;
+            _power = -1;
+            _latexRepresentation = "\\frac{50}{t}";
         }
         public override void AddToComponent(float cofactor)
         {
@@ -32,7 +32,7 @@ namespace Assets.Scripts.Classes
 
         public override double GETCurrentValue(double t, int p)
         {
-            return cofactor * Math.Pow(t, power);
+            return _cofactor * Math.Pow(t, _power);
         }
 
         public override FunctionComponentType GetFunctionComponentType()
@@ -42,7 +42,7 @@ namespace Assets.Scripts.Classes
 
         public override string GETLatexRepresentation()
         {
-            return latexRepresentation;
+            return _latexRepresentation;
         }
 
         public override void IntegrateComponent()

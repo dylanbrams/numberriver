@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FGSFx : MonoBehaviour
+public class FgSFx : MonoBehaviour
 {
     public bool active = true;
     [SerializeField] public float volume = 0.65f;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EditorObjectPool : EditorWindow
 {
-    private Vector2 scr;
+    private Vector2 _scr;
 
     private static string helpInfo =
         "This is a tool for previewing how many times a class that implements TexDrawLib.IFlushable be instantianted, and preserved in memory." +
@@ -18,7 +18,7 @@ public class EditorObjectPool : EditorWindow
             EditorGUILayout.HelpBox(helpInfo, MessageType.Info);
         else
             EditorGUILayout.Space();
-        scr = EditorGUILayout.BeginScrollView(scr, GUILayout.ExpandHeight(true));
+        _scr = EditorGUILayout.BeginScrollView(_scr, GUILayout.ExpandHeight(true));
         var l = ObjectPoolShared.objectPools;
         for (int i = 0; i < l.Count; i++)
         {

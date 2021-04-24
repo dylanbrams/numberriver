@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BGConstantFx : MonoBehaviour
+public class BgConstantFx : MonoBehaviour
 {
     [SerializeField] float volume = 0.125f;
-    [SerializeField] float BGConstantFadeIn = 2f;
+    [SerializeField] float bgConstantFadeIn = 2f;
     [SerializeField] AudioClip backgroundConstantSound;
 
-    private AudioSource myAudioSource;
+    private AudioSource _myAudioSource;
     private void Awake()
     {
-        myAudioSource = gameObject.GetComponent<AudioSource>();
+        _myAudioSource = gameObject.GetComponent<AudioSource>();
     }
 
-    public void playConstantBGFx()
+    public void PlayConstantBgFx()
     {
-        myAudioSource.volume = 0;
-        myAudioSource.clip = backgroundConstantSound;
-        myAudioSource.Play();
-        StartCoroutine(AudioFadeIn.FadeIn(myAudioSource, BGConstantFadeIn, volume));
+        _myAudioSource.volume = 0;
+        _myAudioSource.clip = backgroundConstantSound;
+        _myAudioSource.Play();
+        StartCoroutine(AudioFadeIn.FadeIn(_myAudioSource, bgConstantFadeIn, volume));
     }
 
     public void SetVolume(float volumeIn)
     {
-        if (myAudioSource)
-            myAudioSource.volume = volumeIn;
+        if (_myAudioSource)
+            _myAudioSource.volume = volumeIn;
         volume = volumeIn;
     }
 
@@ -34,9 +34,9 @@ public class BGConstantFx : MonoBehaviour
         return volume;
     }
 
-    public void stopConstantBGFx()
+    public void StopConstantBgFx()
     {
-        myAudioSource.Stop();
+        _myAudioSource.Stop();
     }
 
 }

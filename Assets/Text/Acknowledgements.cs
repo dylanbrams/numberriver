@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Acknowledgements")]
 public class Acknowledgements : ScriptableObject
 {
-    [TextArea(14,200)][SerializeField] string Acknowledgement_string;
+    [TextArea(14,200)][SerializeField] string acknowledgementString;
 }

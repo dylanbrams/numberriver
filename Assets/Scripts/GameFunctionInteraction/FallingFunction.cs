@@ -8,54 +8,54 @@ using TMPro;
 
 public class FallingFunction : MonoBehaviour
 {
-    public Function function;
-    float xSize = 0;
-    float ySize = 0;
-    BoxCollider2D myCollider2D;
-    TEXDraw texDrawUGUI;
-    GameState gameState;
-    Rigidbody2D myRigidBody2D;
-    DragAndDropFallingFunction myDragAndDropTMP;
+    public Function Function;
+    float _xSize = 0;
+    float _ySize = 0;
+    BoxCollider2D _myCollider2D;
+    TEXDraw _texDrawUGUI;
+    GameState _gameState;
+    Rigidbody2D _myRigidBody2D;
+    DragAndDropFallingFunction _myDragAndDropTMP;
     public float randomIn;
 
     [SerializeField] float randomXForceMax = 1;
     [SerializeField] float randomYForceMax = 1;
-    [SerializeField] Vector3 ScoreDisplayOffset = new Vector3(0, 0, 0);
+    [SerializeField] Vector3 scoreDisplayOffset = new Vector3(0, 0, 0);
 
-    private TextMeshProUGUI linkedPointsDisplay;
+    private TextMeshProUGUI _linkedPointsDisplay;
 
     void Start()
     {
         SetupPrivateComponents();
-        SetNewEquation(texDrawUGUI.text);
+        SetNewEquation(_texDrawUGUI.text);
         //StartCoroutine(SetNewEquationLater(10));
     }
 
 
     void SetupPrivateComponents()
     {
-        texDrawUGUI = GetComponent<TEXDraw>();
-        gameState = FindObjectOfType<GameState>();
-        myRigidBody2D = GetComponent<Rigidbody2D>();
-        myDragAndDropTMP = GetComponent<DragAndDropFallingFunction>();
+        _texDrawUGUI = GetComponent<TEXDraw>();
+        _gameState = FindObjectOfType<GameState>();
+        _myRigidBody2D = GetComponent<Rigidbody2D>();
+        _myDragAndDropTMP = GetComponent<DragAndDropFallingFunction>();
 
     }
     void Update()
     {
-        if (myDragAndDropTMP.CanMove())
+        if (_myDragAndDropTMP.CanMove())
         {
             AddRandomForce();
         }
     }
 
-    public Function getFunction()
+    public Function GETFunction()
     {
-        return function;
+        return Function;
     }
 
-    private void SetNewEquation(string NewEquationLatex = "")
+    private void SetNewEquation(string newEquationLatex = "")
     {
-        SetupFunction(NewEquationLatex);
+        SetupFunction(newEquationLatex);
         SetText();
         SetSize();
     }
@@ -67,29 +67,29 @@ public class FallingFunction : MonoBehaviour
 
     public void SetupFunction(string newEquationLatex)
     {
-        function = new Function();
-        function.SetNewFunction(newEquationLatex);
+        Function = new Function();
+        Function.SetNewFunction(newEquationLatex);
 
     }
 
     public void SetupFunction()
     {
-        function = new Function();
-        function.randomIn = randomIn;
-        function.SetNewFunction();
+        Function = new Function();
+        Function.RandomIn = randomIn;
+        Function.SetNewFunction();
         SetText();
         SetSize();
     }
 
     void SetText()
     {
-        if (function != null)
+        if (Function != null)
         {
-            if (texDrawUGUI == null)
+            if (_texDrawUGUI == null)
             {
-                texDrawUGUI = GetComponent<TEXDraw>();
+                _texDrawUGUI = GetComponent<TEXDraw>();
             }
-            texDrawUGUI.text = function.LatexRepresentation;
+            _texDrawUGUI.text = Function.LatexRepresentation;
         }
         else
         {
@@ -99,16 +99,16 @@ public class FallingFunction : MonoBehaviour
 
     void AddRandomForce()
     {
-        myRigidBody2D.AddForce(new Vector2(Random.Range(-randomXForceMax, randomXForceMax), 
+        _myRigidBody2D.AddForce(new Vector2(Random.Range(-randomXForceMax, randomXForceMax), 
             Random.Range(-randomYForceMax, randomYForceMax)));
     }
 
     void SetSize()
     {
-        float x = texDrawUGUI.preferredWidth;
-        float y = texDrawUGUI.preferredHeight;
-        xSize = x;
-        ySize = y;
+        float x = _texDrawUGUI.preferredWidth;
+        float y = _texDrawUGUI.preferredHeight;
+        _xSize = x;
+        _ySize = y;
         SetTexDrawGUIObjectSize();
     }
 
@@ -116,22 +116,22 @@ public class FallingFunction : MonoBehaviour
 
     void SetTexDrawGUIObjectSize()
     {
-        texDrawUGUI.rectTransform.sizeDelta = new Vector2(xSize, ySize);
+        _texDrawUGUI.rectTransform.sizeDelta = new Vector2(_xSize, _ySize);
     }
 
     public void ProcessCombine(FallingFunction functionIn)
     {
-        function.ProcessCombine(functionIn.getFunction());
+        Function.ProcessCombine(functionIn.GETFunction());
     }
 
-    public void setPointsDisplay(TextMeshProUGUI tmpUGUIIn)
+    public void SetPointsDisplay(TextMeshProUGUI tmpUGUIIn)
     {
-        linkedPointsDisplay = tmpUGUIIn;
+        _linkedPointsDisplay = tmpUGUIIn;
     }
 
     public void DisplayPoints(int pointsValue)
     {
-        linkedPointsDisplay.text = pointsValue.ToString();
+        _linkedPointsDisplay.text = pointsValue.ToString();
     }
 
 }

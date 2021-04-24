@@ -5,12 +5,12 @@ using UnityEngine;
 public class GameState : MonoBehaviour
 {
 
-    [SerializeField] bool UIDisabled;
+    [SerializeField] bool uiDisabled;
 
 
     public bool GetUIDisabled()
     {
-        return UIDisabled;
+        return uiDisabled;
     }
 
 

@@ -6,28 +6,28 @@ using UnityEngine;
 [CanEditMultipleObjects]
 public class TEXDraw3DEditor : Editor
 {
-    private SerializedProperty m_Text;
-    private SerializedProperty m_Size;
-    private SerializedProperty m_Align;
-    private SerializedProperty m_Color;
-    private SerializedProperty m_Padding;
-    private SerializedProperty m_ScrollArea;
-    private SerializedProperty m_Material;
-    private SerializedProperty m_PixelsPerUnit;
+    private SerializedProperty _mText;
+    private SerializedProperty _mSize;
+    private SerializedProperty _mAlign;
+    private SerializedProperty _mColor;
+    private SerializedProperty _mPadding;
+    private SerializedProperty _mScrollArea;
+    private SerializedProperty _mMaterial;
+    private SerializedProperty _mPixelsPerUnit;
 
     static bool foldExpand = false;
 
     // Use this for initialization
     private void OnEnable()
     {
-        m_Text = serializedObject.FindProperty("m_Text");
-        m_Size = serializedObject.FindProperty("m_Size");
-        m_Color = serializedObject.FindProperty("m_Color");
-        m_Align = serializedObject.FindProperty("m_Alignment");
-        m_Padding = serializedObject.FindProperty("m_Padding");
-        m_ScrollArea = serializedObject.FindProperty("m_ScrollArea");
-        m_Material = serializedObject.FindProperty("m_Material");
-        m_PixelsPerUnit = serializedObject.FindProperty("m_PixelsPerUnit");
+        _mText = serializedObject.FindProperty("m_Text");
+        _mSize = serializedObject.FindProperty("m_Size");
+        _mColor = serializedObject.FindProperty("m_Color");
+        _mAlign = serializedObject.FindProperty("m_Alignment");
+        _mPadding = serializedObject.FindProperty("m_Padding");
+        _mScrollArea = serializedObject.FindProperty("m_ScrollArea");
+        _mMaterial = serializedObject.FindProperty("m_Material");
+        _mPixelsPerUnit = serializedObject.FindProperty("m_PixelsPerUnit");
         Undo.undoRedoPerformed += Redraw;
     }
 
@@ -42,20 +42,20 @@ public class TEXDraw3DEditor : Editor
         serializedObject.Update();
         EditorGUI.BeginChangeCheck();
 
-        TEXBoxHighlighting.DrawText(m_Text);
+        TEXBoxHighlighting.DrawText(_mText);
 
-        EditorGUILayout.PropertyField(m_Size);
+        EditorGUILayout.PropertyField(_mSize);
         foldExpand = EditorGUILayout.Foldout(foldExpand, "More Properties");
         if (foldExpand)
         {
             EditorGUI.indentLevel++;
-            TEXSharedEditor.DoTextAligmentControl(EditorGUILayout.GetControlRect(), m_Align);
-            EditorGUILayout.PropertyField(m_ScrollArea);
-            EditorGUILayout.PropertyField(m_Padding, true);
-            EditorGUILayout.PropertyField(m_Color);
-            TEXSharedEditor.DoMaterialGUI(m_Material, (ITEXDraw)target);
+            TEXSharedEditor.DoTextAligmentControl(EditorGUILayout.GetControlRect(), _mAlign);
+            EditorGUILayout.PropertyField(_mScrollArea);
+            EditorGUILayout.PropertyField(_mPadding, true);
+            EditorGUILayout.PropertyField(_mColor);
+            TEXSharedEditor.DoMaterialGUI(_mMaterial, (ITEXDraw)target);
 #if !TEXDRAW_TMP
-            EditorGUILayout.PropertyField(m_PixelsPerUnit);
+            EditorGUILayout.PropertyField(_mPixelsPerUnit);
 #endif
             EditorGUI.indentLevel--;
         }

@@ -53,7 +53,7 @@ public static class TEXEditorMenus
     [MenuItem("Tools/TEXDraw/Quick Editor Tool", false, 20)]
     public static void ShowQuickEditor()
     {
-        var w = ScriptableObject.CreateInstance<EditorTEXUIQuickEditors>();
+        var w = ScriptableObject.CreateInstance<EditorTexuiQuickEditors>();
         w.Show();
     }
 
@@ -64,7 +64,7 @@ Mauris eget neque at sem venenatis eleifend. Ut nonummy. Fusce aliquet pede non 
 Felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien. Donec ut est in lectus consequat consequat. Etiam eget dui. Aliquam erat volutpat. Sed at lorem in nunc porta tristique.";
 
 
-    private static readonly string[] progressContents = new string[] {
+    private static readonly string[] ProgressContents = new string[] {
         "Measuring Supplement Performance ..",
         "Measuring Parsing Performance ..",
         "Measuring Boxing Performance ..",
@@ -72,7 +72,7 @@ Felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl ege
         "Measuring Post-Effect Performance .."
     };
 
-    private static readonly string[] logContents = new string[] {
+    private static readonly string[] LOGContents = new string[] {
         "Supplement-ing {0} times in 5 seconds, average {1:F2} ms, normally makeup {2:P2} (of 60 FPS) CPU Performance",
         "Parsing {0} times in 5 seconds, average {1:F2} ms, normally makeup {2:P2} (of 60 FPS) CPU Performance",
         "Boxing {0} times in 5 seconds, average {1:F2} ms, normally makeup {2:P2} (of 60 FPS) CPU Performance",
@@ -342,19 +342,19 @@ Felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl ege
     //         AssetDatabase.ImportPackage(TEXPreference.main.MainFolderPath + "/GuideAndExtras/TEXDraw-NGUI Extensions.unitypackage", true);
     // }
 
-    private const string TEXDRAW_TMP = "TEXDRAW_TMP";
+    private const string texdrawTMP = "TEXDRAW_TMP";
 
     [MenuItem("Tools/TEXDraw/Enable TextMeshPro Integration", false, 100)]
     public static void SetTextMeshProIntegration()
     {
-        if (IsDefined(TEXDRAW_TMP))
+        if (IsDefined(texdrawTMP))
         {
             if (EditorUtility.DisplayDialog("Removing TEXDRAW_TMP",
                  "This will remove TMP integration for all platform. (TMP Font Files will be keep).",
                  "Proceed", "Cancel"))
             {
                 EditorPrefs.SetBool("TEXDraw_WillProceedTMP", true);
-                SetDefined(TEXDRAW_TMP, false, true);
+                SetDefined(texdrawTMP, false, true);
             }
         }
         else
@@ -369,7 +369,7 @@ Felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl ege
             {
                 TEXPreference.Initialize();
                 EditorPrefs.SetBool("TEXDraw_WillProceedTMP", true);
-                SetDefined(TEXDRAW_TMP, true, true);
+                SetDefined(texdrawTMP, true, true);
             }
         }
     }
@@ -490,7 +490,7 @@ Felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl ege
     // }
 
     // UnityEditor.Build.BuildPlatform
-    static BuildTarget defaultTarget(BuildTargetGroup group)
+    static BuildTarget DefaultTarget(BuildTargetGroup group)
     {
 
         switch (group)
@@ -537,7 +537,7 @@ Felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl ege
         foreach (BuildTargetGroup group in System.Enum.GetValues(typeof(BuildTargetGroup)))
         {
 #if !(UNITY_5 || UNITY_2017)
-            if (BuildPipeline.IsBuildTargetSupported(group, defaultTarget(group)))
+            if (BuildPipeline.IsBuildTargetSupported(group, DefaultTarget(group)))
 #endif
             SetDefined(defineName, enable, group);
         }
